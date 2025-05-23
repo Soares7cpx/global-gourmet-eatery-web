@@ -1,8 +1,12 @@
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChefHat, Star } from 'lucide-react';
+import ReservationDialog from '@/components/ReservationDialog';
 
 const HeroSection = () => {
+  const [isReservationOpen, setIsReservationOpen] = useState(false);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -34,9 +38,13 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="btn-gold text-lg px-8 py-4">
+            <Button 
+              size="lg" 
+              className="btn-gold text-lg px-8 py-4"
+              onClick={() => setIsReservationOpen(true)}
+            >
               <ChefHat className="mr-2 h-5 w-5" />
-              Ver Cardápio
+              Reservar Mesa
             </Button>
             <Button 
               size="lg" 
@@ -55,6 +63,12 @@ const HeroSection = () => {
           <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
+
+      {/* Reservation Dialog/Drawer */}
+      <ReservationDialog 
+        open={isReservationOpen}
+        onOpenChange={setIsReservationOpen}
+      />
     </section>
   );
 };

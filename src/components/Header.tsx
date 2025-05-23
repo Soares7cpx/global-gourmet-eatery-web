@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import { Menu, X, Utensils } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ReservationDialog from '@/components/ReservationDialog';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isReservationOpen, setIsReservationOpen] = useState(false);
 
   const menuItems = [
     { label: 'Início', href: '#home' },
@@ -39,7 +41,7 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="btn-gold">
+            <Button className="btn-gold" onClick={() => setIsReservationOpen(true)}>
               Reservar Mesa
             </Button>
           </div>
@@ -67,13 +69,22 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
-              <Button className="btn-gold w-full">
+              <Button className="btn-gold w-full" onClick={() => {
+                setIsMenuOpen(false);
+                setIsReservationOpen(true);
+              }}>
                 Reservar Mesa
               </Button>
             </nav>
           </div>
         )}
       </div>
+
+      {/* Reservation Dialog/Drawer */}
+      <ReservationDialog 
+        open={isReservationOpen}
+        onOpenChange={setIsReservationOpen}
+      />
     </header>
   );
 };

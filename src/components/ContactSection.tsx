@@ -1,8 +1,12 @@
 
+import { useState } from 'react';
 import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import ReservationDialog from '@/components/ReservationDialog';
 
 const ContactSection = () => {
+  const [isReservationOpen, setIsReservationOpen] = useState(false);
+  
   const contactInfo = [
     {
       icon: MapPin,
@@ -96,7 +100,10 @@ const ContactSection = () => {
               </div>
 
               <div className="mt-8 space-y-4">
-                <button className="btn-gold w-full">
+                <button 
+                  className="btn-gold w-full"
+                  onClick={() => setIsReservationOpen(true)}
+                >
                   Reservar Mesa Online
                 </button>
                 <button className="w-full bg-secondary text-foreground hover:bg-secondary/80 font-medium px-6 py-3 rounded-lg transition-all duration-300">
@@ -123,6 +130,12 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Reservation Dialog/Drawer */}
+      <ReservationDialog 
+        open={isReservationOpen}
+        onOpenChange={setIsReservationOpen}
+      />
     </section>
   );
 };
