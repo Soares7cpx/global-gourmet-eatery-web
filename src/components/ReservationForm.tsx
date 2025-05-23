@@ -69,6 +69,12 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
     }, 1500);
   };
 
+  // Array com os horários disponíveis das 14:00 até 22:00 em intervalos de 30 minutos
+  const availableTimes = [
+    '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', 
+    '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00'
+  ];
+
   return (
     <div className="p-6">
       <Form {...form}>
@@ -193,7 +199,7 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00'].map((time) => (
+                      {availableTimes.map((time) => (
                         <SelectItem key={time} value={time}>
                           {time}
                         </SelectItem>
