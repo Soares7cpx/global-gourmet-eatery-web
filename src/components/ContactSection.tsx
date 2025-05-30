@@ -1,10 +1,13 @@
+
 import { useState } from 'react';
 import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import ReservationDialog from '@/components/ReservationDialog';
+import EventQuoteDialog from '@/components/EventQuoteDialog';
 
 const ContactSection = () => {
   const [isReservationOpen, setIsReservationOpen] = useState(false);
+  const [isEventQuoteOpen, setIsEventQuoteOpen] = useState(false);
   
   const contactInfo = [
     {
@@ -67,26 +70,22 @@ const ContactSection = () => {
             ))}
           </div>
 
-          {/* Map and Reservation Section */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Services Section */}
+          <div className="grid lg:grid-cols-2 gap-12 mb-16">
+            {/* Reservations */}
             <div>
               <h3 className="text-3xl font-bold mb-6 text-foreground">
                 Faça sua Reserva
               </h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
                 Para garantir a melhor experiência, recomendamos reservas antecipadas. 
-                Nossa equipe está preparada para atender grupos de todos os tamanhos e 
-                ocasiões especiais.
+                Nossa equipe está preparada para atender grupos de todos os tamanhos.
               </p>
               
-              <div className="space-y-4">
+              <div className="space-y-4 mb-8">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <span className="text-muted-foreground">Reservas online disponíveis 24h</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span className="text-muted-foreground">Eventos e celebrações especiais</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
@@ -98,42 +97,80 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              <div className="mt-8 space-y-4">
-                <button 
-                  className="btn-gold w-full"
-                  onClick={() => setIsReservationOpen(true)}
-                >
-                  Reservar Mesa Online
-                </button>
-                <button className="w-full bg-secondary text-foreground hover:bg-secondary/80 font-medium px-6 py-3 rounded-lg transition-all duration-300">
-                  Solicitar Orçamento para Eventos
-                </button>
-              </div>
+              <button 
+                className="btn-gold w-full"
+                onClick={() => setIsReservationOpen(true)}
+              >
+                Reservar Mesa Online
+              </button>
             </div>
 
-            <div className="relative">
-              <div className="bg-secondary/30 rounded-lg p-8 text-center">
-                <MapPin className="h-16 w-16 text-primary mx-auto mb-4" />
-                <h4 className="text-xl font-semibold mb-2 text-foreground">
-                  Localização Privilegiada
-                </h4>
-                <p className="text-muted-foreground mb-4">
-                  Situado no coração dos Jardins, oferecemos fácil acesso e estacionamento 
-                  para uma experiência completa
-                </p>
-                <button className="bg-primary text-black font-medium px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors">
-                  Ver no Mapa
-                </button>
+            {/* Events */}
+            <div>
+              <h3 className="text-3xl font-bold mb-6 text-foreground">
+                Eventos Especiais
+              </h3>
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                Transformamos seus eventos em experiências gastronômicas únicas. 
+                Desde jantares íntimos até grandes celebrações corporativas.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-muted-foreground">Casamentos e celebrações</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-muted-foreground">Eventos corporativos</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-muted-foreground">Cardápio personalizado</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-muted-foreground">Serviço completo de catering</span>
+                </div>
               </div>
+
+              <button 
+                className="w-full bg-secondary text-foreground hover:bg-secondary/80 font-medium px-6 py-3 rounded-lg transition-all duration-300"
+                onClick={() => setIsEventQuoteOpen(true)}
+              >
+                Solicitar Orçamento para Eventos
+              </button>
+            </div>
+          </div>
+
+          {/* Map Section */}
+          <div className="relative">
+            <div className="bg-secondary/30 rounded-lg p-8 text-center">
+              <MapPin className="h-16 w-16 text-primary mx-auto mb-4" />
+              <h4 className="text-xl font-semibold mb-2 text-foreground">
+                Localização Privilegiada
+              </h4>
+              <p className="text-muted-foreground mb-4">
+                Situado no coração dos Jardins, oferecemos fácil acesso e estacionamento 
+                para uma experiência completa
+              </p>
+              <button className="bg-primary text-black font-medium px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+                Ver no Mapa
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Reservation Dialog/Drawer */}
+      {/* Dialogs */}
       <ReservationDialog 
         open={isReservationOpen}
         onOpenChange={setIsReservationOpen}
+      />
+      
+      <EventQuoteDialog 
+        open={isEventQuoteOpen}
+        onOpenChange={setIsEventQuoteOpen}
       />
     </section>
   );
