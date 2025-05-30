@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -21,7 +20,7 @@ const ContactSection = () => {
     {
       icon: Clock,
       title: 'Funcionamento',
-      details: ['Seg a Qui: 18h às 00h', 'Sex a Sáb: 18h às 02h', 'Dom: 18h às 23h']
+      details: ['Seg a Dom: 14h às 22h', 'Reservas até 21h30']
     },
     {
       icon: Mail,
