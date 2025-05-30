@@ -16,7 +16,7 @@ const ContactSection = () => {
     {
       icon: Phone,
       title: 'Telefones',
-      details: ['(11) 3456-7890', '(11) 99876-5432', 'WhatsApp disponível']
+      details: ['(11) 97834-5918', 'WhatsApp disponível']
     },
     {
       icon: Clock,

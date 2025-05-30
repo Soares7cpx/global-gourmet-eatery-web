@@ -50,8 +50,8 @@ const Footer = () => {
                 <li>Jardins, São Paulo - SP</li>
                 <li>CEP: 01234-567</li>
                 <li className="pt-2">
-                  <a href="tel:+551134567890" className="hover:text-primary transition-colors">
-                    (11) 3456-7890
+                  <a href="tel:+5511978345918" className="hover:text-primary transition-colors">
+                    (11) 97834-5918
                   </a>
                 </li>
                 <li>
