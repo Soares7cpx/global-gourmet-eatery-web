@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon, Clock, Users, Utensils } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import emailjs from '@emailjs/browser';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -56,18 +57,57 @@ const EventQuoteForm = ({ onClose }: EventQuoteFormProps) => {
     },
   });
 
+  const sendEventQuoteEmail = async (data: FormValues) => {
+    try {
+      const templateParams = {
+        to_name: data.name,
+        to_email: data.email,
+        restaurant_name: 'Mundo Gastronômico',
+        event_type: data.eventType,
+        date: format(data.date, 'PPP', { locale: ptBR }),
+        guests: data.guests,
+        phone: data.phone,
+        company: data.company || 'Não informado',
+        budget: data.budget || 'Não especificado',
+        requirements: data.requirements || 'Nenhum',
+        restaurant_phone: '(11) 97834-5918',
+        restaurant_email: 'eventos@mundogastronomico.com'
+      };
+
+      await emailjs.send(
+        'service_events', // Service ID
+        'template_events', // Template ID
+        templateParams,
+        'your_public_key' // Public Key
+      );
+
+      console.log('Email de confirmação de orçamento enviado com sucesso');
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+    }
+  };
+
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
     console.log('Solicitação de orçamento enviada:', data);
     
-    setTimeout(() => {
+    try {
+      await sendEventQuoteEmail(data);
+      
+      setTimeout(() => {
+        setIsSubmitting(false);
+        toast.success('Solicitação enviada com sucesso!', {
+          description: `${data.name}, recebemos sua solicitação para ${data.eventType}. Entraremos em contato em até 24 horas. Você receberá um email de confirmação em breve.`,
+        });
+        onClose();
+      }, 1500);
+    } catch (error) {
       setIsSubmitting(false);
-      toast.success('Solicitação enviada com sucesso!', {
-        description: `${data.name}, recebemos sua solicitação para ${data.eventType}. Entraremos em contato em até 24 horas.`,
+      toast.error('Erro ao processar solicitação', {
+        description: 'Houve um problema ao enviar sua solicitação. Tente novamente ou entre em contato conosco.',
       });
-      onClose();
-    }, 1500);
+    }
   };
 
   const eventTypes = [

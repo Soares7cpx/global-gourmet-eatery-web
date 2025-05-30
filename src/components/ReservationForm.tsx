@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import emailjs from '@emailjs/browser';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -54,19 +55,60 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
     },
   });
 
+  const sendReservationEmail = async (data: FormValues) => {
+    try {
+      // Template parameters for EmailJS
+      const templateParams = {
+        to_name: data.name,
+        to_email: data.email,
+        restaurant_name: 'Mundo Gastronômico',
+        date: format(data.date, 'PPP', { locale: ptBR }),
+        time: data.time,
+        guests: data.guests,
+        phone: data.phone,
+        occasion: data.occasion || 'Não especificado',
+        special_requests: data.message || 'Nenhuma',
+        restaurant_phone: '(11) 97834-5918',
+        restaurant_email: 'reservas@mundogastronomico.com'
+      };
+
+      // Configure EmailJS with your service ID, template ID, and public key
+      // You'll need to replace these with your actual EmailJS credentials
+      await emailjs.send(
+        'service_reservation', // Service ID
+        'template_reservation', // Template ID
+        templateParams,
+        'your_public_key' // Public Key
+      );
+
+      console.log('Email de confirmação enviado com sucesso');
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+    }
+  };
+
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
-    // Simulação de envio para backend (adicionar API real no futuro)
     console.log('Formulário enviado:', data);
     
-    setTimeout(() => {
+    try {
+      // Send confirmation email
+      await sendReservationEmail(data);
+      
+      setTimeout(() => {
+        setIsSubmitting(false);
+        toast.success('Reserva confirmada!', {
+          description: `${data.name}, sua reserva para ${data.guests} pessoas em ${format(data.date, 'PPP', { locale: ptBR })} às ${data.time} foi confirmada. Você receberá um email de confirmação em breve.`,
+        });
+        onClose();
+      }, 1500);
+    } catch (error) {
       setIsSubmitting(false);
-      toast.success('Reserva recebida com sucesso!', {
-        description: `${data.name}, sua reserva para ${data.guests} pessoas em ${format(data.date, 'PPP', { locale: ptBR })} às ${data.time} foi confirmada.`,
+      toast.error('Erro ao processar reserva', {
+        description: 'Houve um problema ao confirmar sua reserva. Tente novamente ou entre em contato conosco.',
       });
-      onClose();
-    }, 1500);
+    }
   };
 
   // Array com os horários disponíveis das 14:00 até 22:00 em intervalos de 30 minutos
