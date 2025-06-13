@@ -91,10 +91,6 @@
 
   .card-hover {
     @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl;
-    /* Reduce motion for mobile users who prefer it */
-    @media (prefers-reduced-motion: reduce) {
-      @apply hover:scale-100;
-    }
   }
 
   /* Mobile-optimized spacing */
@@ -139,12 +135,24 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  
+  /* Remove hover scale effects for users who prefer reduced motion */
+  .card-hover {
+    transform: none !important;
+  }
+  
+  .card-hover:hover {
+    transform: none !important;
+  }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .text-gradient {
-    @apply text-primary;
-    background: none;
+    background: none !important;
+    color: hsl(var(--primary)) !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
   }
 }
