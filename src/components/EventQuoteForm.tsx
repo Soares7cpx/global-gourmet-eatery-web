@@ -265,7 +265,7 @@ const EventQuoteForm = ({ onClose }: EventQuoteFormProps) => {
                       <SelectItem value="5k-10k">R$ 5.000 - R$ 10.000</SelectItem>
                       <SelectItem value="10k-20k">R$ 10.000 - R$ 20.000</SelectItem>
                       <SelectItem value="20k-50k">R$ 20.000 - R$ 50.000</SelectItem>
-                      <SelectItem value="50k+">Acima de R$ 50.000</Selectitem>
+                      <SelectItem value="50k+">Acima de R$ 50.000</SelectItem>
                       <SelectItem value="conversar">Prefiro conversar</SelectItem>
                     </SelectContent>
                   </Select>
