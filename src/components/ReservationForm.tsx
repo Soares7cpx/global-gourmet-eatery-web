@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Clock } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
@@ -11,7 +11,7 @@ import { Form } from '@/components/ui/form';
 import { toast } from 'sonner';
 
 import { formSchema, FormValues } from './reservation/FormSchema';
-import { sendReservationEmail } from './reservation/ReservationEmailService';
+import { sendReservationWhatsApp } from './reservation/ReservationWhatsAppService';
 import PersonalInfoFields from './reservation/PersonalInfoFields';
 import BookingDetailsFields from './reservation/BookingDetailsFields';
 import AdditionalInfoFields from './reservation/AdditionalInfoFields';
@@ -40,20 +40,20 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
     console.log('Formulário enviado:', data);
     
     try {
-      // Send confirmation email
-      await sendReservationEmail(data);
+      // Send WhatsApp message
+      sendReservationWhatsApp(data);
       
       setTimeout(() => {
         setIsSubmitting(false);
-        toast.success('Reserva confirmada!', {
-          description: `${data.name}, sua reserva para ${data.guests} pessoas em ${format(data.date, 'PPP', { locale: ptBR })} às ${data.time} foi confirmada. Você receberá um email de confirmação em breve.`,
+        toast.success('WhatsApp aberto!', {
+          description: `${data.name}, o WhatsApp foi aberto com os dados da sua reserva para ${data.guests} pessoas em ${format(data.date, 'PPP', { locale: ptBR })} às ${data.time}. Envie a mensagem para confirmar sua reserva.`,
         });
         onClose();
       }, 1500);
     } catch (error) {
       setIsSubmitting(false);
-      toast.error('Erro ao processar reserva', {
-        description: 'Houve um problema ao confirmar sua reserva. Tente novamente ou entre em contato conosco.',
+      toast.error('Erro ao abrir WhatsApp', {
+        description: 'Houve um problema ao abrir o WhatsApp. Verifique se você tem o WhatsApp instalado.',
       });
     }
   };
@@ -76,11 +76,14 @@ const ReservationForm = ({ onClose }: ReservationFormProps) => {
             <Button type="submit" className="btn-gold" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
-                  <Clock className="mr-2 h-4 w-4 animate-spin" />
-                  Processando...
+                  <MessageCircle className="mr-2 h-4 w-4 animate-spin" />
+                  Abrindo WhatsApp...
                 </>
               ) : (
-                'Confirmar Reserva'
+                <>
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Enviar via WhatsApp
+                </>
               )}
             </Button>
           </div>

@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon, Clock, Users, Utensils } from 'lucide-react';
+import { CalendarIcon, MessageCircle, Users, Utensils } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import emailjs from '@emailjs/browser';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -23,6 +22,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
+import { sendEventQuoteWhatsApp } from './reservation/EventWhatsAppService';
 
 const formSchema = z.object({
   name: z.string().min(3, { message: 'Nome deve ter pelo menos 3 caracteres' }),
@@ -57,55 +57,25 @@ const EventQuoteForm = ({ onClose }: EventQuoteFormProps) => {
     },
   });
 
-  const sendEventQuoteEmail = async (data: FormValues) => {
-    try {
-      const templateParams = {
-        to_name: data.name,
-        to_email: data.email,
-        restaurant_name: 'Mundo Gastronômico',
-        event_type: data.eventType,
-        date: format(data.date, 'PPP', { locale: ptBR }),
-        guests: data.guests,
-        phone: data.phone,
-        company: data.company || 'Não informado',
-        budget: data.budget || 'Não especificado',
-        requirements: data.requirements || 'Nenhum',
-        restaurant_phone: '(11) 97834-5918',
-        restaurant_email: 'eventos@mundogastronomico.com'
-      };
-
-      await emailjs.send(
-        'service_events', // Service ID
-        'template_events', // Template ID
-        templateParams,
-        'your_public_key' // Public Key
-      );
-
-      console.log('Email de confirmação de orçamento enviado com sucesso');
-    } catch (error) {
-      console.error('Erro ao enviar email:', error);
-    }
-  };
-
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
     console.log('Solicitação de orçamento enviada:', data);
     
     try {
-      await sendEventQuoteEmail(data);
+      sendEventQuoteWhatsApp(data);
       
       setTimeout(() => {
         setIsSubmitting(false);
-        toast.success('Solicitação enviada com sucesso!', {
-          description: `${data.name}, recebemos sua solicitação para ${data.eventType}. Entraremos em contato em até 24 horas. Você receberá um email de confirmação em breve.`,
+        toast.success('WhatsApp aberto!', {
+          description: `${data.name}, o WhatsApp foi aberto com os dados do seu evento ${data.eventType}. Envie a mensagem para solicitar o orçamento.`,
         });
         onClose();
       }, 1500);
     } catch (error) {
       setIsSubmitting(false);
-      toast.error('Erro ao processar solicitação', {
-        description: 'Houve um problema ao enviar sua solicitação. Tente novamente ou entre em contato conosco.',
+      toast.error('Erro ao abrir WhatsApp', {
+        description: 'Houve um problema ao abrir o WhatsApp. Verifique se você tem o WhatsApp instalado.',
       });
     }
   };
@@ -295,7 +265,7 @@ const EventQuoteForm = ({ onClose }: EventQuoteFormProps) => {
                       <SelectItem value="5k-10k">R$ 5.000 - R$ 10.000</SelectItem>
                       <SelectItem value="10k-20k">R$ 10.000 - R$ 20.000</SelectItem>
                       <SelectItem value="20k-50k">R$ 20.000 - R$ 50.000</SelectItem>
-                      <SelectItem value="50k+">Acima de R$ 50.000</SelectItem>
+                      <SelectItem value="50k+">Acima de R$ 50.000</Selectitem>
                       <SelectItem value="conversar">Prefiro conversar</SelectItem>
                     </SelectContent>
                   </Select>
@@ -335,11 +305,14 @@ const EventQuoteForm = ({ onClose }: EventQuoteFormProps) => {
             <Button type="submit" className="btn-gold" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
-                  <Clock className="mr-2 h-4 w-4 animate-spin" />
-                  Enviando...
+                  <MessageCircle className="mr-2 h-4 w-4 animate-spin" />
+                  Abrindo WhatsApp...
                 </>
               ) : (
-                'Solicitar Orçamento'
+                <>
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Enviar via WhatsApp
+                </>
               )}
             </Button>
           </div>
