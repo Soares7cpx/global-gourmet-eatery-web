@@ -21,17 +21,26 @@ export const sendReservationEmail = async (data: FormValues) => {
       restaurant_email: 'reservas@mundogastronomico.com'
     };
 
-    // Configure EmailJS with your service ID, template ID, and public key
-    // You'll need to replace these with your actual EmailJS credentials
+    // IMPORTANTE: Substitua pelos seus dados reais do EmailJS
+    // 1. Acesse: https://dashboard.emailjs.com/
+    // 2. Crie uma conta e configure um serviço de email
+    // 3. Crie um template com os campos acima
+    // 4. Substitua os valores abaixo:
+    
+    const SERVICE_ID = 'SEU_SERVICE_ID_AQUI'; // Ex: 'service_abc123'
+    const TEMPLATE_ID = 'SEU_TEMPLATE_ID_AQUI'; // Ex: 'template_xyz789'
+    const PUBLIC_KEY = 'SUA_PUBLIC_KEY_AQUI'; // Ex: 'user_ABC123XYZ'
+
     await emailjs.send(
-      'service_reservation', // Service ID
-      'template_reservation', // Template ID
+      SERVICE_ID,
+      TEMPLATE_ID,
       templateParams,
-      'your_public_key' // Public Key
+      PUBLIC_KEY
     );
 
-    console.log('Email de confirmação enviado com sucesso');
+    console.log('Email de confirmação enviado com sucesso para:', data.email);
   } catch (error) {
     console.error('Erro ao enviar email:', error);
+    throw error;
   }
 };
