@@ -1,35 +1,43 @@
 
+import OptimizedImage from './OptimizedImage';
+
 const GallerySection = () => {
   const images = [
     {
       src: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=500&q=80',
-      alt: 'Prato gourmet internacional',
-      title: 'Culinária Artesanal'
+      alt: 'Prato gourmet internacional - Culinária artesanal',
+      title: 'Culinária Artesanal',
+      description: 'Técnicas refinadas de diferentes culturas'
     },
     {
       src: 'https://images.unsplash.com/photo-1493962853295-0fd70327578a?auto=format&fit=crop&w=500&q=80',
-      alt: 'Ambiente sofisticado',
-      title: 'Ambiente Elegante'
+      alt: 'Ambiente sofisticado para aulas de culinária',
+      title: 'Ambiente Elegante',
+      description: 'Espaço profissional para aprendizado'
     },
     {
       src: 'https://images.unsplash.com/photo-1498936178812-4b2e558d2937?auto=format&fit=crop&w=500&q=80',
-      alt: 'Ingredientes frescos',
-      title: 'Ingredientes Premium'
+      alt: 'Ingredientes frescos e premium',
+      title: 'Ingredientes Premium',
+      description: 'Seleção cuidadosa dos melhores produtos'
     },
     {
       src: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?auto=format&fit=crop&w=500&q=80',
-      alt: 'Mesa preparada',
-      title: 'Experiência Única'
+      alt: 'Mesa preparada para evento gastronômico',
+      title: 'Experiência Única',
+      description: 'Eventos personalizados e memoráveis'
     },
     {
-      src: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=500&q=80',
-      alt: 'Chef preparando',
-      title: 'Mestres da Culinária'
+      src: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=500&q=80',
+      alt: 'Chef preparando pratos internacionais',
+      title: 'Mestres da Culinária',
+      description: 'Chefs especializados em cozinhas do mundo'
     },
     {
-      src: 'https://images.unsplash.com/photo-1493962853295-0fd70327578a?auto=format&fit=crop&w=500&q=80',
-      alt: 'Vinhos selecionados',
-      title: 'Carta de Vinhos'
+      src: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80',
+      alt: 'Seleção de vinhos para harmonização',
+      title: 'Carta de Vinhos',
+      description: 'Harmonização perfeita para cada prato'
     }
   ];
 
@@ -55,14 +63,17 @@ const GallerySection = () => {
                 key={index}
                 className="group relative overflow-hidden rounded-lg shadow-lg card-hover cursor-pointer"
               >
-                <img
+                <OptimizedImage
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  width={500}
+                  height={256}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-4 left-4 text-white">
-                    <h3 className="text-lg font-semibold">{image.title}</h3>
+                    <h3 className="text-lg font-semibold mb-1">{image.title}</h3>
+                    <p className="text-sm text-gray-200">{image.description}</p>
                   </div>
                 </div>
               </div>
@@ -72,7 +83,7 @@ const GallerySection = () => {
           {/* Call to Action */}
           <div className="text-center mt-12">
             <p className="text-lg text-muted-foreground mb-6">
-              Venha vivenciar essa experiência gastronômica única
+              Venha vivenciar essa experiência gastronômica única em São Paulo
             </p>
             <button className="btn-gold">
               Reservar sua Mesa

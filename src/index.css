@@ -53,10 +53,28 @@
 
   body {
     @apply bg-background text-foreground font-inter;
+    /* Improved mobile performance */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-playfair;
+    /* Better mobile text scaling */
+    text-wrap: balance;
+  }
+
+  /* Improve mobile touch targets */
+  button, a, [role="button"] {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Better mobile form inputs */
+  input, textarea, select {
+    @apply text-base;
+    /* Prevents zoom on iOS */
+    font-size: max(16px, 1rem);
   }
 }
 
@@ -67,9 +85,66 @@
 
   .btn-gold {
     @apply bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black font-medium px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105;
+    /* Better mobile touch */
+    @apply min-h-[48px] active:scale-95;
   }
 
   .card-hover {
     @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl;
+    /* Reduce motion for mobile users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+      @apply hover:scale-100;
+    }
+  }
+
+  /* Mobile-optimized spacing */
+  .container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Better mobile typography */
+  .mobile-text-scale {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+
+  .mobile-heading-scale {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Reduce animations on mobile for better performance */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  /* Better mobile scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Optimize font loading on mobile */
+  body {
+    font-display: swap;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gradient {
+    @apply text-primary;
+    background: none;
   }
 }
