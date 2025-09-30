@@ -1,7 +1,10 @@
 
 import OptimizedImage from './OptimizedImage';
+import { useState } from 'react';
+import ReservationDialog from './ReservationDialog';
 
 const GallerySection = () => {
+  const [isReservationOpen, setIsReservationOpen] = useState(false);
   const images = [
     {
       src: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=500&q=80',
@@ -85,12 +88,20 @@ const GallerySection = () => {
             <p className="text-lg text-muted-foreground mb-6">
               Venha vivenciar essa experiência gastronômica única em São Paulo
             </p>
-            <button className="btn-gold">
+            <button 
+              className="btn-gold"
+              onClick={() => setIsReservationOpen(true)}
+            >
               Reservar sua Mesa
             </button>
           </div>
         </div>
       </div>
+
+      <ReservationDialog 
+        open={isReservationOpen}
+        onOpenChange={setIsReservationOpen}
+      />
     </section>
   );
 };

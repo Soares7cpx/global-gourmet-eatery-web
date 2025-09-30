@@ -1,8 +1,11 @@
 
 import { Star, Quote } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
+import { useState } from 'react';
+import ReservationDialog from './ReservationDialog';
 
 const TestimonialsSection = () => {
+  const [isReservationOpen, setIsReservationOpen] = useState(false);
   const testimonials = [
     {
       name: 'Maria Silva',
@@ -83,12 +86,20 @@ const TestimonialsSection = () => {
             <p className="text-lg text-muted-foreground mb-6">
               Junte-se a centenas de alunos satisfeitos
             </p>
-            <button className="btn-gold">
+            <button 
+              className="btn-gold"
+              onClick={() => setIsReservationOpen(true)}
+            >
               Comece Sua Jornada Gastronômica
             </button>
           </div>
         </div>
       </div>
+
+      <ReservationDialog 
+        open={isReservationOpen}
+        onOpenChange={setIsReservationOpen}
+      />
     </section>
   );
 };

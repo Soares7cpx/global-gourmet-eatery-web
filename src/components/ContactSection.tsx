@@ -154,7 +154,10 @@ const ContactSection = () => {
                 Situado no coração dos Jardins, oferecemos fácil acesso e estacionamento 
                 para uma experiência completa
               </p>
-              <button className="bg-primary text-black font-medium px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+              <button 
+                className="bg-primary text-black font-medium px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                onClick={() => window.open('https://www.google.com/maps/search/Rua+Gourmet,+123+Jardins+São+Paulo', '_blank')}
+              >
                 Ver no Mapa
               </button>
             </div>

@@ -40,10 +40,10 @@ const OptimizedImage = ({
   const optimizedSrc = getOptimizedSrc(src, width, height);
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className="relative overflow-hidden">
       {!isLoaded && !hasError && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-          <div className="text-gray-400 text-sm">Carregando...</div>
+        <div className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center">
+          <div className="text-muted-foreground text-sm">Carregando...</div>
         </div>
       )}
       
@@ -61,8 +61,8 @@ const OptimizedImage = ({
       />
       
       {hasError && (
-        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-          <div className="text-gray-400 text-sm">Erro ao carregar imagem</div>
+        <div className="absolute inset-0 bg-muted flex items-center justify-center">
+          <div className="text-muted-foreground text-sm">Erro ao carregar imagem</div>
         </div>
       )}
     </div>

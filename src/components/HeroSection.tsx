@@ -50,6 +50,9 @@ const HeroSection = () => {
               size="lg" 
               variant="outline" 
               className="text-white border-white hover:bg-white hover:text-black text-lg px-8 py-4"
+              onClick={() => {
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               Nossa História
             </Button>
