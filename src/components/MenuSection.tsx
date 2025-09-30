@@ -31,6 +31,24 @@ const MenuSection = () => {
         description: 'Pasta de grão-de-bico com tahine, azeite e pão pita',
         price: 'R$ 32',
         origin: '🇱🇧 Líbano'
+      },
+      {
+        name: 'Bruschetta Caprese',
+        description: 'Pão tostado com tomate, mozzarella fresca e manjericão',
+        price: 'R$ 35',
+        origin: '🇮🇹 Itália'
+      },
+      {
+        name: 'Spring Rolls Vietnamitas',
+        description: 'Rolinhos frescos com camarão, vegetais e molho agridoce',
+        price: 'R$ 36',
+        origin: '🇻🇳 Vietnã'
+      },
+      {
+        name: 'Ceviche Peruano',
+        description: 'Peixe fresco marinado em limão com cebola roxa e coentro',
+        price: 'R$ 42',
+        origin: '🇵🇪 Peru'
       }
     ],
     principais: [
@@ -51,6 +69,24 @@ const MenuSection = () => {
         description: 'Carne bovina cozida lentamente no vinho tinto francês',
         price: 'R$ 85',
         origin: '🇫🇷 França'
+      },
+      {
+        name: 'Pad Thai',
+        description: 'Macarrão de arroz com camarões, amendoim e tamarindo',
+        price: 'R$ 58',
+        origin: '🇹🇭 Tailândia'
+      },
+      {
+        name: 'Moussaka Grega',
+        description: 'Berinjela gratinada com carne moída e molho bechamel',
+        price: 'R$ 68',
+        origin: '🇬🇷 Grécia'
+      },
+      {
+        name: 'Ramen Tonkotsu',
+        description: 'Macarrão japonês em caldo de osso de porco com chashu',
+        price: 'R$ 62',
+        origin: '🇯🇵 Japão'
       }
     ],
     sobremesas: [
@@ -71,6 +107,24 @@ const MenuSection = () => {
         description: 'Creme francês com açúcar caramelizado',
         price: 'R$ 30',
         origin: '🇫🇷 França'
+      },
+      {
+        name: 'Mochi Japonês',
+        description: 'Bolinho de arroz macio recheado com pasta de feijão doce',
+        price: 'R$ 24',
+        origin: '🇯🇵 Japão'
+      },
+      {
+        name: 'Churros Espanhóis',
+        description: 'Massa frita crocante com açúcar, canela e chocolate quente',
+        price: 'R$ 26',
+        origin: '🇪🇸 Espanha'
+      },
+      {
+        name: 'Pavlova Australiana',
+        description: 'Merengue crocante com chantilly e frutas frescas',
+        price: 'R$ 32',
+        origin: '🇦🇺 Austrália'
       }
     ],
     bebidas: [
@@ -91,6 +145,24 @@ const MenuSection = () => {
         description: 'Chá verde com hortelã fresca e açúcar',
         price: 'R$ 18',
         origin: '🇲🇦 Marrocos'
+      },
+      {
+        name: 'Mojito Cubano',
+        description: 'Rum branco, hortelã, limão e água com gás',
+        price: 'R$ 28',
+        origin: '🇨🇺 Cuba'
+      },
+      {
+        name: 'Sake Premium',
+        description: 'Bebida japonesa de arroz fermentado, servido quente ou frio',
+        price: 'R$ 45',
+        origin: '🇯🇵 Japão'
+      },
+      {
+        name: 'Lassi Indiano',
+        description: 'Bebida cremosa de iogurte com manga ou cardamomo',
+        price: 'R$ 20',
+        origin: '🇮🇳 Índia'
       }
     ]
   };
@@ -116,9 +188,9 @@ const MenuSection = () => {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                   activeCategory === category.id
-                    ? 'bg-primary text-black'
+                    ? 'bg-primary text-black shadow-lg scale-105'
                     : 'bg-secondary text-foreground hover:bg-secondary/80'
                 }`}
               >
@@ -131,7 +203,11 @@ const MenuSection = () => {
           {/* Menu Items */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {menuItems[activeCategory as keyof typeof menuItems]?.map((item, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 card-hover bg-card border-border">
+              <Card 
+                key={index} 
+                className="group hover:shadow-xl transition-all duration-300 card-hover bg-card border-border animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
@@ -145,7 +221,7 @@ const MenuSection = () => {
                     {item.description}
                   </p>
                   <div className="flex items-center text-sm text-muted-foreground">
-                    <span className="bg-secondary px-3 py-1 rounded-full">
+                    <span className="bg-secondary px-3 py-1 rounded-full transition-colors group-hover:bg-primary/20">
                       {item.origin}
                     </span>
                   </div>
