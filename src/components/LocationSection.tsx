@@ -1,10 +1,10 @@
 
 import { MapPin, Phone, Clock, Navigation } from 'lucide-react';
 import { useState } from 'react';
-import ReservationDialog from './ReservationDialog';
+import TourRequestDialog from './TourRequestDialog';
 
 const LocationSection = () => {
-  const [isReservationOpen, setIsReservationOpen] = useState(false);
+  const [isTourRequestOpen, setIsTourRequestOpen] = useState(false);
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -116,7 +116,7 @@ const LocationSection = () => {
             </p>
             <button 
               className="btn-gold"
-              onClick={() => setIsReservationOpen(true)}
+              onClick={() => setIsTourRequestOpen(true)}
             >
               Agendar Visita
             </button>
@@ -124,9 +124,9 @@ const LocationSection = () => {
         </div>
       </div>
 
-      <ReservationDialog 
-        open={isReservationOpen}
-        onOpenChange={setIsReservationOpen}
+      <TourRequestDialog 
+        open={isTourRequestOpen}
+        onOpenChange={setIsTourRequestOpen}
       />
     </section>
   );
