@@ -62,7 +62,8 @@ const EventQuoteForm = ({ onClose }: EventQuoteFormProps) => {
     console.log('Solicitação de orçamento enviada:', data);
     
     try {
-      sendEventQuoteWhatsApp(data);
+      // Cast to any to avoid TypeScript issues with optional fields
+      sendEventQuoteWhatsApp(data as any);
       
       setTimeout(() => {
         setIsSubmitting(false);
