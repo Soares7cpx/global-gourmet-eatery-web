@@ -31,7 +31,7 @@ const AboutSection = () => {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gradient">
+            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
               Nossa Paixão pela Gastronomia
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -44,7 +44,7 @@ const AboutSection = () => {
           {/* Story */}
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="space-y-6">
-              <h3 className="text-3xl font-bold text-foreground">
+              <h3 className="font-playfair text-3xl font-bold text-foreground">
                 Uma Jornada Gastronômica Global
               </h3>
               <p className="text-muted-foreground leading-relaxed">

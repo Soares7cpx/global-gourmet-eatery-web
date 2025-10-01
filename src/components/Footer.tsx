@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
                 <Utensils className="h-8 w-8 text-primary" />
-                <h3 className="text-xl font-bold text-gradient">Mundo Gastronômico</h3>
+                <h3 className="font-playfair text-xl font-bold text-gradient">Mundo Gastronômico</h3>
               </div>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 Uma jornada culinária pelos sabores do mundo, onde cada prato conta uma história 

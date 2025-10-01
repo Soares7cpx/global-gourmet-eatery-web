@@ -23,7 +23,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <Utensils className="h-8 w-8 text-primary" />
-            <h1 className="text-xl font-bold text-gradient">Mundo Gastronômico</h1>
+            <h1 className="font-playfair text-xl font-bold text-gradient">Mundo Gastronômico</h1>
           </div>
 
           {/* Desktop Navigation */}

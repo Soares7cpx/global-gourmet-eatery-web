@@ -40,19 +40,21 @@ const OptimizedImage = ({
   const optimizedSrc = getOptimizedSrc(src, width, height);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className={`relative overflow-hidden ${className}`}>
+      {/* Enhanced Skeleton Loader with shimmer effect */}
       {!isLoaded && !hasError && (
-        <div className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center">
-          <div className="text-muted-foreground text-sm">Carregando...</div>
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary/30 via-secondary/50 to-secondary/30 animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" />
         </div>
       )}
       
+      {/* Image with smooth fade-in */}
       <img
         src={optimizedSrc}
         alt={alt}
-        className={`transition-opacity duration-300 ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        } ${className}`}
+        className={`w-full h-full object-cover transition-all duration-500 ${
+          isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+        }`}
         loading={priority ? 'eager' : 'lazy'}
         onLoad={() => setIsLoaded(true)}
         onError={() => setHasError(true)}
@@ -60,9 +62,10 @@ const OptimizedImage = ({
         height={height}
       />
       
+      {/* Error State */}
       {hasError && (
-        <div className="absolute inset-0 bg-muted flex items-center justify-center">
-          <div className="text-muted-foreground text-sm">Erro ao carregar imagem</div>
+        <div className="absolute inset-0 bg-secondary/30 flex items-center justify-center">
+          <span className="text-muted-foreground text-sm">Imagem indisponível</span>
         </div>
       )}
     </div>

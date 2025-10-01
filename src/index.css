@@ -86,11 +86,11 @@
   .btn-gold {
     @apply bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-black font-medium px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105;
     /* Better mobile touch */
-    @apply min-h-[48px] active:scale-95;
+    @apply min-h-[48px] active:scale-95 shadow-lg hover:shadow-xl;
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl;
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl;
   }
 
   /* Mobile-optimized spacing */
@@ -105,6 +105,20 @@
 
   .mobile-heading-scale {
     @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+
+  /* Shimmer animation for loading states */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
   }
 }
 
