@@ -37,7 +37,8 @@ const Footer = () => {
                 <li><a href="#home" className="text-muted-foreground hover:text-primary transition-colors">Início</a></li>
                 <li><a href="#about" className="text-muted-foreground hover:text-primary transition-colors">Sobre Nós</a></li>
                 <li><a href="#menu" className="text-muted-foreground hover:text-primary transition-colors">Cardápio</a></li>
-                <li><a href="#gallery" className="text-muted-foreground hover:text-primary transition-colors">Galeria</a></li>
+                <li><a href="#classes" className="text-muted-foreground hover:text-primary transition-colors">Aulas</a></li>
+                <li><a href="#faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</a></li>
                 <li><a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contato</a></li>
               </ul>
             </div>

@@ -12,7 +12,9 @@ const Header = () => {
     { label: 'Início', href: '#home' },
     { label: 'Sobre', href: '#about' },
     { label: 'Cardápio', href: '#menu' },
+    { label: 'Aulas', href: '#classes' },
     { label: 'Galeria', href: '#gallery' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Contato', href: '#contact' }
   ];
 
