@@ -2,11 +2,12 @@
 import { MapPin, Phone, Clock, Navigation } from 'lucide-react';
 import { useState } from 'react';
 import TourRequestDialog from './TourRequestDialog';
+import GoogleMap from './GoogleMap';
 
 const LocationSection = () => {
   const [isTourRequestOpen, setIsTourRequestOpen] = useState(false);
   return (
-    <section className="py-20 bg-background">
+    <section id="location" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -20,7 +21,7 @@ const LocationSection = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
             {/* Contact Information */}
             <div className="space-y-8">
               <h3 className="text-2xl font-bold text-foreground mb-6">
@@ -72,36 +73,14 @@ const LocationSection = () => {
                       Localizado no coração dos Jardins, próximo ao metrô Trianon-MASP.
                       Estacionamento conveniado disponível.
                     </p>
-                    <button 
-                      className="text-primary hover:text-primary/80 transition-colors font-medium"
-                      onClick={() => window.open('https://www.google.com/maps/search/Rua+Gourmet,+123+Jardins+São+Paulo', '_blank')}
-                    >
-                      Ver no Google Maps →
-                    </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="relative">
-              <div className="bg-secondary/30 rounded-lg h-96 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <h4 className="text-lg font-semibold text-foreground mb-2">
-                    Mundo Gastronômico
-                  </h4>
-                  <p className="text-muted-foreground mb-4">
-                    Jardins, São Paulo - SP
-                  </p>
-                  <button 
-                    className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
-                    onClick={() => window.open('https://www.google.com/maps/search/Rua+Gourmet,+123+Jardins+São+Paulo', '_blank')}
-                  >
-                    Abrir no Google Maps
-                  </button>
-                </div>
-              </div>
+            {/* Google Map */}
+            <div>
+              <GoogleMap />
             </div>
           </div>
 

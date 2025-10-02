@@ -65,6 +65,39 @@
     text-wrap: balance;
   }
 
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  .sr-only:focus,
+  .sr-only:active {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
+  /* Focus visible for better accessibility */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+
   /* Improve mobile touch targets */
   button, a, [role="button"] {
     @apply min-h-[44px] min-w-[44px];
@@ -91,6 +124,22 @@
 
   .card-hover {
     @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl;
+  }
+  
+  /* Slide up animation for cookie banner */
+  @keyframes slide-up {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
   }
 
   /* Mobile-optimized spacing */
