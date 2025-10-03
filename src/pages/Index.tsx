@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import Header from '@/components/Header';
+import StructuredData from '@/components/StructuredData';
 import HeroSection from '@/components/HeroSection';
 import SocialProofSection from '@/components/SocialProofSection';
 import AboutSection from '@/components/AboutSection';
@@ -40,6 +41,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <StructuredData />
       <SkipNavigation />
       <Header />
       <main id="main-content">

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChefHat, Star } from 'lucide-react';
 import ReservationDialog from '@/components/ReservationDialog';
@@ -9,11 +9,11 @@ const HeroSection = () => {
   const [scrollY, setScrollY] = useState(0);
 
   // Parallax effect
-  useState(() => {
+  useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  });
+  }, []);
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
