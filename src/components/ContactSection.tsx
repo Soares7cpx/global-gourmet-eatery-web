@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import ReservationDialog from '@/components/ReservationDialog';
 import EventQuoteDialog from '@/components/EventQuoteDialog';
 
@@ -23,7 +24,7 @@ const ContactSection = () => {
     {
       icon: Clock,
       title: 'Funcionamento',
-      details: ['Seg a Dom: 14h às 22h', 'Reservas até 21h30']
+      details: ['Segunda a Sexta: 09:00 - 22:00', 'Sábado e Domingo: 10:00 - 20:00', 'Reservas até 21h30']
     },
     {
       icon: Mail,
@@ -134,12 +135,13 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              <button 
-                className="w-full bg-secondary text-foreground hover:bg-secondary/80 font-medium px-6 py-3 rounded-lg transition-all duration-300"
+              <Button 
+                variant="secondary"
+                className="w-full"
                 onClick={() => setIsEventQuoteOpen(true)}
               >
                 Solicitar Orçamento para Eventos
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -154,12 +156,12 @@ const ContactSection = () => {
                 Situado no coração dos Jardins, oferecemos fácil acesso e estacionamento 
                 para uma experiência completa
               </p>
-              <button 
-                className="bg-primary text-black font-medium px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+              <Button 
+                className="btn-gold"
                 onClick={() => window.open('https://www.google.com/maps/search/Rua+Gourmet,+123+Jardins+São+Paulo', '_blank')}
               >
                 Ver no Mapa
-              </button>
+              </Button>
             </div>
           </div>
         </div>

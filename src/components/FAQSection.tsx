@@ -81,7 +81,7 @@ const FAQSection = () => {
             </p>
             <a 
               href="#contact" 
-              className="inline-block bg-primary text-black font-medium px-8 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
+              className="inline-block btn-gold"
             >
               Entre em Contato
             </a>

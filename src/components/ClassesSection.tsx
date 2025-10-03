@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Calendar, Clock, Users, ChefHat } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import CourseEnrollmentDialog from '@/components/CourseEnrollmentDialog';
 
 const ClassesSection = () => {
@@ -73,11 +74,11 @@ const ClassesSection = () => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Iniciante':
-        return 'bg-green-500/10 text-green-700 dark:text-green-400';
+        return 'bg-primary/10 text-primary border-primary/20';
       case 'Intermediário':
-        return 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400';
+        return 'bg-accent/30 text-accent-foreground border-accent';
       case 'Avançado':
-        return 'bg-red-500/10 text-red-700 dark:text-red-400';
+        return 'bg-destructive/10 text-destructive border-destructive/20';
       default:
         return 'bg-secondary';
     }
@@ -166,12 +167,13 @@ const ClassesSection = () => {
                     <span className="text-2xl font-bold text-primary">
                       {classItem.price}
                     </span>
-                    <button
+                    <Button
                       onClick={() => setIsEnrollmentOpen(true)}
-                      className="bg-primary text-black px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
+                      className="btn-gold"
+                      size="sm"
                     >
                       Inscrever-se
-                    </button>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -189,7 +191,7 @@ const ClassesSection = () => {
             </p>
             <a 
               href="#contact"
-              className="inline-block bg-primary text-black font-medium px-8 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 transform hover:scale-105"
+              className="inline-block btn-gold"
             >
               Solicitar Aula Personalizada
             </a>

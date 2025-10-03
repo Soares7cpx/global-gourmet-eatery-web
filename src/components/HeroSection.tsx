@@ -45,7 +45,7 @@ const HeroSection = () => {
             <span className="block text-gradient">Mundo</span>
           </h1>
           
-          <p className="font-inter text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+          <p className="font-inter text-xl md:text-2xl text-foreground/90 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
             Uma experiência gastronômica única que leva você em uma viagem pelos continentes através de pratos autênticos e sofisticados
           </p>
           
@@ -61,7 +61,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-white border-2 border-white/80 hover:bg-white hover:text-black text-lg px-8 py-4 backdrop-blur-sm bg-white/10 transition-all duration-300"
+              className="text-foreground border-2 border-border hover:bg-accent hover:text-accent-foreground text-lg px-8 py-4 backdrop-blur-sm bg-background/10 transition-all duration-300"
               onClick={() => {
                 document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
               }}
