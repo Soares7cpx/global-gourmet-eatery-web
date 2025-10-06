@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { Menu, X, Utensils } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ReservationDialog from '@/components/ReservationDialog';
 
@@ -12,6 +13,7 @@ const Header = () => {
     { label: 'Início', href: '#home' },
     { label: 'Sobre', href: '#about' },
     { label: 'Cardápio', href: '#menu' },
+    { label: 'Pedidos Online', href: '/pedidos', isRoute: true },
     { label: 'Aulas', href: '#classes' },
     { label: 'Galeria', href: '#gallery' },
     { label: 'FAQ', href: '#faq' },
@@ -31,13 +33,23 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
-              >
-                {item.label}
-              </a>
+              item.isRoute ? (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+                >
+                  {item.label}
+                </a>
+              )
             ))}
           </nav>
 
@@ -62,14 +74,25 @@ const Header = () => {
           <div className="md:hidden bg-background border-t border-border">
             <nav className="flex flex-col space-y-4 p-4">
               {menuItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
+                item.isRoute ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                )
               ))}
               <Button className="btn-gold w-full" onClick={() => {
                 setIsMenuOpen(false);
