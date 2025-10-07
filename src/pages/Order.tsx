@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Home } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { Link } from 'react-router-dom';
 import MenuItem from '@/components/order/MenuItem';
 import CartSheet from '@/components/order/CartSheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 
 interface MenuCategory {
   id: string;
@@ -70,11 +72,13 @@ const Order = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b">
+      <header className="sticky top-0 z-50 bg-gradient-to-r from-background via-background to-muted border-b border-primary/20 shadow-lg">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <ShoppingBag className="h-8 w-8 text-primary" />
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <ShoppingBag className="h-6 w-6 text-primary" />
+                </div>
                 <div>
                   <h1 className="font-playfair text-2xl font-bold text-gradient">
                     Pedidos Online
@@ -84,19 +88,30 @@ const Order = () => {
                   </p>
                 </div>
               </div>
-              <CartSheet />
+              <div className="flex items-center gap-2">
+                <Link to="/">
+                  <Button variant="outline" size="sm" className="gap-2 border-primary/30 hover:border-primary hover:bg-primary/10">
+                    <Home className="h-4 w-4" />
+                    <span className="hidden sm:inline">Início</span>
+                  </Button>
+                </Link>
+                <CartSheet />
+              </div>
             </div>
           </div>
         </header>
 
         {/* Main Content */}
         <main className="container mx-auto px-4 py-8">
-          <div className="mb-8 text-center">
-            <h2 className="font-playfair text-3xl md:text-4xl font-bold mb-2">
-              Nosso Menu
+          <div className="mb-8 text-center space-y-4">
+            <div className="inline-block px-4 py-2 bg-primary/10 rounded-full border border-primary/30">
+              <p className="text-sm font-medium text-primary">Delivery & Retirada</p>
+            </div>
+            <h2 className="font-playfair text-3xl md:text-4xl font-bold mb-2 text-gradient">
+              Nosso Menu Especial
             </h2>
-            <p className="text-muted-foreground">
-              Selecione seus pratos favoritos e adicione ao carrinho
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Descubra sabores autênticos e selecione seus pratos favoritos. Preparamos cada receita com ingredientes frescos e muito carinho.
             </p>
           </div>
 
@@ -115,12 +130,12 @@ const Order = () => {
             </div>
           ) : (
             <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-              <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-transparent">
+              <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-muted/50 p-2 border border-primary/20">
                 {categories.map((category) => (
                   <TabsTrigger
                     key={category.id}
                     value={category.id}
-                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all"
                   >
                     {category.name}
                   </TabsTrigger>

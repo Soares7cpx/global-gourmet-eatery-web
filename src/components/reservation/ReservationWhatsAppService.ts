@@ -11,7 +11,7 @@ export const sendReservationWhatsApp = (data: FormValues) => {
 
 📋 *Dados da Reserva:*
 • Nome: ${data.name}
-• Email: ${data.email}
+• E-mail: ${data.email}
 • Telefone: ${data.phone}
 • Data: ${format(data.date, 'PPP', { locale: ptBR })}
 • Horário: ${data.time}
