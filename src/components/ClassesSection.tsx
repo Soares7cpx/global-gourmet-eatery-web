@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import CourseEnrollmentDialog from '@/components/CourseEnrollmentDialog';
+import cookingClassImage from '@/assets/cooking-class.jpg';
 
 const ClassesSection = () => {
   const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(false);
@@ -11,12 +12,12 @@ const ClassesSection = () => {
   const classes = [
     {
       title: 'Massas Italianas Artesanais',
-      description: 'Aprenda a fazer massa fresca do zero: fettuccine, ravioli e gnocchi',
+      description: 'Aprenda a fazer massa fresca do zero: fettuccine, ravioli e gnocchi com técnicas tradicionais',
       duration: '3 horas',
       difficulty: 'Iniciante',
       maxStudents: 12,
       price: 'R$ 280',
-      image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=800&q=80',
+      image: cookingClassImage,
       nextDates: ['15 Jan', '22 Jan', '29 Jan']
     },
     {

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChefHat, Star } from 'lucide-react';
 import ReservationDialog from '@/components/ReservationDialog';
+import heroImage from '@/assets/hero-restaurant.jpg';
 
 const HeroSection = () => {
   const [isReservationOpen, setIsReservationOpen] = useState(false);
@@ -21,7 +22,7 @@ const HeroSection = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-100 ease-out"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=2000&q=80')`,
+          backgroundImage: `url('${heroImage}')`,
           transform: `translateY(${scrollY * 0.5}px)`
         }}
       />
