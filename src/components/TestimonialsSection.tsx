@@ -8,25 +8,25 @@ const TestimonialsSection = () => {
   const [isCourseEnrollmentOpen, setIsCourseEnrollmentOpen] = useState(false);
   const testimonials = [
     {
-      name: 'Maria Silva',
-      role: 'Empresária',
+      name: 'Ana S.',
+      role: 'Aluna',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b607?auto=format&fit=crop&w=150&q=80',
-      text: 'As aulas de culinária internacional mudaram completamente minha forma de cozinhar. Aprendi técnicas incríveis e sabores únicos!',
+      text: 'Aprendi a fazer pratos incríveis e me diverti muito! A equipe é super atenciosa.',
       rating: 5
     },
     {
-      name: 'João Santos',
-      role: 'Chef Amador',
+      name: 'Lucas F.',
+      role: 'Entusiasta',
       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80',
-      text: 'O evento privado que organizamos foi perfeito. Todos os convidados ficaram impressionados com a qualidade dos pratos.',
+      text: 'Experiência maravilhosa! O ambiente é inspirador e as aulas são muito bem explicadas.',
       rating: 5
     },
     {
-      name: 'Ana Costa',
-      role: 'Nutricionista',
+      name: 'Fernanda M.',
+      role: 'Cliente Frequente',
       image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80',
-      text: 'Experiência gastronômica única! Aprendi sobre ingredientes de diferentes culturas e como combiná-los de forma saudável.',
-      rating: 5
+      text: 'Vale cada minuto! Já fiz duas aulas e quero voltar!',
+      rating: 4
     }
   ];
 

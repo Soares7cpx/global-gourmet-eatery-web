@@ -16,8 +16,8 @@ const LocationSection = () => {
               Nossa Localização
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Estamos no coração de São Paulo, nos Jardins, oferecendo fácil acesso 
-              para suas aulas de culinária internacional
+              Estamos localizados no coração de São Paulo, em um espaço moderno e acolhedor, 
+              perfeito para aulas, eventos e experiências gastronômicas
             </p>
           </div>
 
@@ -34,9 +34,8 @@ const LocationSection = () => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-1">Endereço</h4>
                     <p className="text-muted-foreground">
-                      Rua Gourmet, 123<br />
-                      Jardins, São Paulo - SP<br />
-                      CEP: 01234-567
+                      Rua das Flores, 123<br />
+                      São Paulo - SP
                     </p>
                   </div>
                 </div>
@@ -59,8 +58,9 @@ const LocationSection = () => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-1">Horário de Funcionamento</h4>
                     <div className="text-muted-foreground space-y-1">
-                      <p>Segunda a Sexta: 09:00 - 22:00</p>
-                      <p>Sábado e Domingo: 10:00 - 20:00</p>
+                      <p>Segunda a Sexta: 10h às 22h</p>
+                      <p>Sábado: 11h às 23h</p>
+                      <p>Domingo: Fechado</p>
                     </div>
                   </div>
                 </div>
@@ -70,8 +70,8 @@ const LocationSection = () => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-1">Como Chegar</h4>
                     <p className="text-muted-foreground mb-3">
-                      Localizado no coração dos Jardins, próximo ao metrô Trianon-MASP.
-                      Estacionamento conveniado disponível.
+                      Venha nos visitar e descubra um novo sabor em cada detalhe!
+                      Estacionamento disponível nas proximidades.
                     </p>
                   </div>
                 </div>

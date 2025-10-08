@@ -49,15 +49,13 @@ const AboutSection = () => {
                   Do Sonho à Realidade
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  O Mundo Gastronômico nasceu da paixão de nossos fundadores por explorar diferentes culturas 
-                  através da gastronomia. Após anos viajando pelo mundo e estudando com mestres culinários 
-                  de diversos países, decidimos criar um espaço onde essas experiências pudessem ser 
-                  compartilhadas com São Paulo.
+                  O Mundo Gastronômico nasceu do amor por ensinar e pela culinária internacional. 
+                  Criado por apaixonados por gastronomia, nosso espaço une sabores, culturas e técnicas 
+                  em aulas práticas e experiências únicas.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  Hoje, somos reconhecidos como um dos principais restaurantes de culinária internacional 
-                  da cidade, oferecendo não apenas refeições memoráveis, mas também a oportunidade de 
-                  aprender com nossos chefs através de aulas práticas e imersivas.
+                  Aqui, cada receita conta uma história — e cada aluno descobre um novo prazer em cozinhar. 
+                  Aprenda, saboreie e viva o melhor da culinária mundial conosco!
                 </p>
               </div>
               
