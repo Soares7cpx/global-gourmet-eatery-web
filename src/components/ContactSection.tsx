@@ -24,7 +24,7 @@ const ContactSection = () => {
     {
       icon: Clock,
       title: 'Funcionamento',
-      details: ['Segunda a Sexta: 09:00 - 22:00', 'Sábado e Domingo: 10:00 - 20:00', 'Reservas até 21h30']
+      details: ['Segunda a Sexta: 10h às 22h', 'Sábado: 11h às 23h', 'Domingo: Fechado']
     },
     {
       icon: Mail,
