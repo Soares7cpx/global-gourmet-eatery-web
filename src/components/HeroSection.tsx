@@ -32,8 +32,8 @@ const HeroSection = () => {
       
       {/* Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-        <div className="animate-fade-in">
-          <div className="flex items-center justify-center mb-6 animate-scale-in">
+        <div className="animate-fade-in animation-delay-100">
+          <div className="flex items-center justify-center mb-6 animate-scale-in animation-delay-200">
             <div className="flex text-primary drop-shadow-lg">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="h-6 w-6 fill-current animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
@@ -41,12 +41,12 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <h1 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl">
+          <h1 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-2xl animation-delay-300">
             Sabores do
-            <span className="block text-gradient">Mundo</span>
+            <span className="block text-gradient animate-fade-in animation-delay-500">Mundo</span>
           </h1>
           
-          <p className="font-inter text-xl md:text-2xl text-foreground/90 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+          <p className="font-inter text-xl md:text-2xl text-foreground/90 mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-lg animate-fade-in animation-delay-500">
             Uma experiência gastronômica única que leva você em uma viagem pelos continentes através de pratos autênticos e sofisticados
           </p>
           
