@@ -1,6 +1,7 @@
 import { Globe, Users, Award, Clock } from 'lucide-react';
 import chefCookingImage from '@/assets/chef-cooking.jpg';
 import internationalDishesImage from '@/assets/international-dishes.jpg';
+import AnimatedSection from '@/components/AnimatedSection';
 
 const AboutSection = () => {
   const features = [
@@ -31,17 +32,20 @@ const AboutSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
-              Nossa História
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Uma jornada gastronômica que começou há 15 anos com o sonho de unir culturas através da culinária
-            </p>
-          </div>
+          <AnimatedSection animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
+                Nossa História
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Uma jornada gastronômica que começou há 15 anos com o sonho de unir culturas através da culinária
+              </p>
+            </div>
+          </AnimatedSection>
 
           {/* Story Section with Images */}
-          <div className="grid md:grid-cols-2 gap-12 mb-16">
+          <AnimatedSection animation="slide-right" delay={200}>
+            <div className="grid md:grid-cols-2 gap-12 mb-16">
             {/* Text Content */}
             <div className="space-y-6">
               <div>
@@ -94,10 +98,12 @@ const AboutSection = () => {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          </AnimatedSection>
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <AnimatedSection animation="fade-up" delay={400}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div 
                 key={index} 
@@ -114,10 +120,12 @@ const AboutSection = () => {
                 </p>
               </div>
             ))}
-          </div>
+            </div>
+          </AnimatedSection>
 
           {/* Stats Section */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 bg-background rounded-2xl p-8">
+          <AnimatedSection animation="scale-in" delay={600}>
+            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 bg-background rounded-2xl p-8">
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">15+</div>
               <p className="text-muted-foreground">Anos de Tradição</p>
@@ -134,7 +142,8 @@ const AboutSection = () => {
               <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">500+</div>
               <p className="text-muted-foreground">Alunos Formados</p>
             </div>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

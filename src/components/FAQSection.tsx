@@ -1,5 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HelpCircle } from 'lucide-react';
+import AnimatedSection from '@/components/AnimatedSection';
 
 const FAQSection = () => {
   const faqs = [
@@ -42,22 +43,25 @@ const FAQSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <div className="flex justify-center mb-6">
-              <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center">
-                <HelpCircle className="h-8 w-8 text-primary" />
+          <AnimatedSection animation="fade-up">
+            <div className="text-center mb-16">
+              <div className="flex justify-center mb-6">
+                <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center">
+                  <HelpCircle className="h-8 w-8 text-primary" />
+                </div>
               </div>
+              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
+                Perguntas Frequentes
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                Encontre respostas para as dúvidas mais comuns sobre nossos serviços
+              </p>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
-              Perguntas Frequentes
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Encontre respostas para as dúvidas mais comuns sobre nossos serviços
-            </p>
-          </div>
+          </AnimatedSection>
 
           {/* FAQ Accordion */}
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <AnimatedSection animation="fade-up" delay={200}>
+            <Accordion type="single" collapsible className="w-full space-y-4">
             {faqs.map((faq, index) => (
               <AccordionItem 
                 key={index} 
@@ -72,10 +76,12 @@ const FAQSection = () => {
                 </AccordionContent>
               </AccordionItem>
             ))}
-          </Accordion>
+            </Accordion>
+          </AnimatedSection>
 
           {/* Contact CTA */}
-          <div className="mt-12 text-center">
+          <AnimatedSection animation="scale-in" delay={400}>
+            <div className="mt-12 text-center">
             <p className="text-muted-foreground mb-4">
               Não encontrou a resposta que procurava?
             </p>
@@ -85,7 +91,8 @@ const FAQSection = () => {
             >
               Entre em Contato
             </a>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

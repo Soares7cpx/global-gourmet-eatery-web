@@ -8,6 +8,7 @@ import cookingClassImage from '@/assets/cooking-class.jpg';
 import chefCookingImage from '@/assets/chef-cooking.jpg';
 import internationalDishesImage from '@/assets/international-dishes.jpg';
 import appetizersImage from '@/assets/appetizers.jpg';
+import AnimatedSection from '@/components/AnimatedSection';
 
 const GallerySection = () => {
   const [isReservationOpen, setIsReservationOpen] = useState(false);
@@ -56,22 +57,25 @@ const GallerySection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <div className="flex justify-center mb-6">
-              <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center">
-                <Camera className="h-8 w-8 text-primary" />
+          <AnimatedSection animation="fade-up">
+            <div className="text-center mb-16">
+              <div className="flex justify-center mb-6">
+                <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center">
+                  <Camera className="h-8 w-8 text-primary" />
+                </div>
               </div>
+              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
+                Galeria de Experiências
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Descubra nosso ambiente, pratos e momentos especiais que tornam cada visita inesquecível
+              </p>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
-              Galeria de Experiências
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Descubra nosso ambiente, pratos e momentos especiais que tornam cada visita inesquecível
-            </p>
-          </div>
+          </AnimatedSection>
 
           {/* Gallery Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <AnimatedSection animation="fade-up" delay={200}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {images.map((image, index) => (
               <div
                 key={index}
@@ -96,10 +100,12 @@ const GallerySection = () => {
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          </AnimatedSection>
 
           {/* CTA Section */}
-          <div className="text-center bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-2xl p-12 border border-primary/20">
+          <AnimatedSection animation="scale-in" delay={400}>
+            <div className="text-center bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-2xl p-12 border border-primary/20">
             <h3 className="text-3xl font-bold mb-4 text-foreground">
               Pronto para Sua Experiência Gastronômica?
             </h3>
@@ -125,11 +131,12 @@ const GallerySection = () => {
                 Ver Aulas Disponíveis
               </Button>
             </div>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
 
-      <ReservationDialog 
+      <ReservationDialog
         open={isReservationOpen}
         onOpenChange={setIsReservationOpen}
       />

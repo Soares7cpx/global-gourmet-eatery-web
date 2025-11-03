@@ -1,8 +1,8 @@
-
 import { Star, Quote } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 import { useState } from 'react';
 import CourseEnrollmentDialog from './CourseEnrollmentDialog';
+import AnimatedSection from '@/components/AnimatedSection';
 
 const TestimonialsSection = () => {
   const [isCourseEnrollmentOpen, setIsCourseEnrollmentOpen] = useState(false);
@@ -35,18 +35,21 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
-              O Que Dizem Nossos Alunos
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Transformamos vidas através da culinária. Veja os depoimentos de quem já vivenciou 
-              nossas experiências gastronômicas
-            </p>
-          </div>
+          <AnimatedSection animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
+                O Que Dizem Nossos Alunos
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Transformamos vidas através da culinária. Veja os depoimentos de quem já vivenciou 
+                nossas experiências gastronômicas
+              </p>
+            </div>
+          </AnimatedSection>
 
           {/* Testimonials Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatedSection animation="fade-up" delay={200}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
@@ -79,10 +82,12 @@ const TestimonialsSection = () => {
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          </AnimatedSection>
 
           {/* Call to Action */}
-          <div className="text-center mt-12">
+          <AnimatedSection animation="scale-in" delay={400}>
+            <div className="text-center mt-12">
             <p className="text-lg text-muted-foreground mb-6">
               Junte-se a centenas de alunos satisfeitos
             </p>
@@ -92,11 +97,12 @@ const TestimonialsSection = () => {
             >
               Comece Sua Jornada Gastronômica
             </button>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
 
-      <CourseEnrollmentDialog 
+      <CourseEnrollmentDialog
         open={isCourseEnrollmentOpen}
         onOpenChange={setIsCourseEnrollmentOpen}
       />

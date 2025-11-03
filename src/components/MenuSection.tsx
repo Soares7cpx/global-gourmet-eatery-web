@@ -1,6 +1,6 @@
-
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import AnimatedSection from '@/components/AnimatedSection';
 
 const MenuSection = () => {
   const [activeCategory, setActiveCategory] = useState('entradas');
@@ -172,18 +172,21 @@ const MenuSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
-              Cardápio Internacional
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Explore sabores autênticos de diferentes culturas, preparados com ingredientes frescos 
-              e técnicas tradicionais por nossos chefs especializados
-            </p>
-          </div>
+          <AnimatedSection animation="fade-up">
+            <div className="text-center mb-16">
+              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
+                Cardápio Internacional
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Explore sabores autênticos de diferentes culturas, preparados com ingredientes frescos 
+                e técnicas tradicionais por nossos chefs especializados
+              </p>
+            </div>
+          </AnimatedSection>
 
           {/* Category Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <AnimatedSection animation="fade-in" delay={200}>
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
             {categories.map((category) => (
               <button
                 key={category.id}
@@ -198,10 +201,12 @@ const MenuSection = () => {
                 {category.name}
               </button>
             ))}
-          </div>
+            </div>
+          </AnimatedSection>
 
           {/* Menu Items */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatedSection animation="fade-up" delay={400}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {menuItems[activeCategory as keyof typeof menuItems]?.map((item, index) => (
               <Card 
                 key={index} 
@@ -228,7 +233,8 @@ const MenuSection = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

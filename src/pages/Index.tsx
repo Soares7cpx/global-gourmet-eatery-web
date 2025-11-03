@@ -1,24 +1,25 @@
-
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import Header from '@/components/Header';
 import StructuredData from '@/components/StructuredData';
 import HeroSection from '@/components/HeroSection';
 import SocialProofSection from '@/components/SocialProofSection';
-import AboutSection from '@/components/AboutSection';
-import MenuSection from '@/components/MenuSection';
-import ClassesSection from '@/components/ClassesSection';
-import GallerySection from '@/components/GallerySection';
-import ChefsSection from '@/components/ChefsSection';
-import TestimonialsSection from '@/components/TestimonialsSection';
-import FAQSection from '@/components/FAQSection';
-import LocationSection from '@/components/LocationSection';
-import ContactSection from '@/components/ContactSection';
-import NewsletterSection from '@/components/NewsletterSection';
-import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import BackToTop from '@/components/BackToTop';
 import CookieConsent from '@/components/CookieConsent';
 import SkipNavigation from '@/components/SkipNavigation';
+
+// Lazy load heavy sections for better performance
+const AboutSection = lazy(() => import('@/components/AboutSection'));
+const MenuSection = lazy(() => import('@/components/MenuSection'));
+const ClassesSection = lazy(() => import('@/components/ClassesSection'));
+const GallerySection = lazy(() => import('@/components/GallerySection'));
+const ChefsSection = lazy(() => import('@/components/ChefsSection'));
+const TestimonialsSection = lazy(() => import('@/components/TestimonialsSection'));
+const FAQSection = lazy(() => import('@/components/FAQSection'));
+const LocationSection = lazy(() => import('@/components/LocationSection'));
+const ContactSection = lazy(() => import('@/components/ContactSection'));
+const NewsletterSection = lazy(() => import('@/components/NewsletterSection'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 const Index = () => {
   useEffect(() => {
@@ -48,18 +49,22 @@ const Index = () => {
       <main id="main-content">
         <HeroSection />
         <SocialProofSection />
-        <AboutSection />
-        <MenuSection />
-        <ClassesSection />
-        <GallerySection />
-        <ChefsSection />
-        <TestimonialsSection />
-        <FAQSection />
-        <LocationSection />
-        <ContactSection />
-        <NewsletterSection />
+        <Suspense fallback={<div className="py-20" aria-label="Carregando conteúdo" />}>
+          <AboutSection />
+          <MenuSection />
+          <ClassesSection />
+          <GallerySection />
+          <ChefsSection />
+          <TestimonialsSection />
+          <FAQSection />
+          <LocationSection />
+          <ContactSection />
+          <NewsletterSection />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
       <WhatsAppButton />
       <BackToTop />
       <CookieConsent />

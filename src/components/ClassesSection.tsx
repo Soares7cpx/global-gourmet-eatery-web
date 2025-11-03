@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import CourseEnrollmentDialog from '@/components/CourseEnrollmentDialog';
 import cookingClassImage from '@/assets/cooking-class.jpg';
+import AnimatedSection from '@/components/AnimatedSection';
 
 const ClassesSection = () => {
   const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(false);
@@ -90,23 +91,26 @@ const ClassesSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
-            <div className="flex justify-center mb-6">
-              <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center">
-                <ChefHat className="h-8 w-8 text-primary" />
+          <AnimatedSection animation="fade-up">
+            <div className="text-center mb-16">
+              <div className="flex justify-center mb-6">
+                <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center">
+                  <ChefHat className="h-8 w-8 text-primary" />
+                </div>
               </div>
+              <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
+                Aulas de Culinária Internacional
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Aprenda com chefs especializados em suas próprias cozinhas. 
+                Turmas pequenas, ingredientes premium e certificado ao final
+              </p>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-gradient">
-              Aulas de Culinária Internacional
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Aprenda com chefs especializados em suas próprias cozinhas. 
-              Turmas pequenas, ingredientes premium e certificado ao final
-            </p>
-          </div>
+          </AnimatedSection>
 
           {/* Classes Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatedSection animation="fade-up" delay={200}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {classes.map((classItem, index) => (
               <Card 
                 key={index} 
@@ -179,10 +183,12 @@ const ClassesSection = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
+            </div>
+          </AnimatedSection>
 
           {/* Bottom CTA */}
-          <div className="mt-12 text-center bg-secondary rounded-2xl p-8">
+          <AnimatedSection animation="scale-in" delay={400}>
+            <div className="mt-12 text-center bg-secondary rounded-2xl p-8">
             <h3 className="text-2xl font-bold mb-4 text-foreground">
               Não encontrou a aula ideal?
             </h3>
@@ -196,7 +202,8 @@ const ClassesSection = () => {
             >
               Solicitar Aula Personalizada
             </a>
-          </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
 
