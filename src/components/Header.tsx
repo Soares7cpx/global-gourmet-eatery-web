@@ -1,13 +1,22 @@
-
 import { useState } from 'react';
-import { Menu, X, Utensils } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Menu, X, Utensils, User, LogOut, Calendar } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import ReservationDialog from '@/components/ReservationDialog';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isReservationOpen, setIsReservationOpen] = useState(false);
+  const { user, signOut, loading } = useAuth();
+  const navigate = useNavigate();
 
   const menuItems = [
     { label: 'Início', href: '#home' },
@@ -19,6 +28,11 @@ const Header = () => {
     { label: 'FAQ', href: '#faq' },
     { label: 'Contato', href: '#contact' }
   ];
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-primary/20 shadow-lg">
@@ -53,11 +67,38 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Button + User Menu */}
+          <div className="hidden md:flex items-center gap-4">
             <Button className="btn-gold" onClick={() => setIsReservationOpen(true)}>
               Reservar Mesa
             </Button>
+
+            {!loading && (
+              user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon" className="rounded-full">
+                      <User className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => navigate('/minhas-reservas')}>
+                      <Calendar className="mr-2 h-4 w-4" />
+                      Minhas Reservas
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sair
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button variant="outline" onClick={() => navigate('/auth')}>
+                  Entrar
+                </Button>
+              )
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -94,12 +135,43 @@ const Header = () => {
                   </a>
                 )
               ))}
+
+              {!loading && user && (
+                <Link
+                  to="/minhas-reservas"
+                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium flex items-center gap-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Calendar className="h-4 w-4" />
+                  Minhas Reservas
+                </Link>
+              )}
+
               <Button className="btn-gold w-full" onClick={() => {
                 setIsMenuOpen(false);
                 setIsReservationOpen(true);
               }}>
                 Reservar Mesa
               </Button>
+
+              {!loading && (
+                user ? (
+                  <Button variant="outline" className="w-full" onClick={() => {
+                    setIsMenuOpen(false);
+                    handleSignOut();
+                  }}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sair
+                  </Button>
+                ) : (
+                  <Button variant="outline" className="w-full" onClick={() => {
+                    setIsMenuOpen(false);
+                    navigate('/auth');
+                  }}>
+                    Entrar
+                  </Button>
+                )
+              )}
             </nav>
           </div>
         )}
