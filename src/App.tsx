@@ -10,6 +10,12 @@ import Auth from "./pages/Auth";
 import MinhasReservas from "./pages/MinhasReservas";
 import NotFound from "./pages/NotFound";
 
+// Admin pages
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminReservations from "./pages/admin/AdminReservations";
+import AdminUsers from "./pages/admin/AdminUsers";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,6 +30,14 @@ const App = () => (
             <Route path="/pedidos" element={<Order />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/minhas-reservas" element={<MinhasReservas />} />
+            
+            {/* Admin routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="reservas" element={<AdminReservations />} />
+              <Route path="usuarios" element={<AdminUsers />} />
+            </Route>
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
