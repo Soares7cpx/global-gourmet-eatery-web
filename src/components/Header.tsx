@@ -11,11 +11,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import ReservationDialog from '@/components/ReservationDialog';
 import { useAuth } from '@/hooks/useAuth';
+import { Shield } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isReservationOpen, setIsReservationOpen] = useState(false);
-  const { user, signOut, loading } = useAuth();
+  const { user, signOut, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const menuItems = [
@@ -86,6 +87,15 @@ const Header = () => {
                       <Calendar className="mr-2 h-4 w-4" />
                       Minhas Reservas
                     </DropdownMenuItem>
+                    {isAdmin && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={() => navigate('/admin')}>
+                          <Shield className="mr-2 h-4 w-4" />
+                          Painel Admin
+                        </DropdownMenuItem>
+                      </>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignOut}>
                       <LogOut className="mr-2 h-4 w-4" />
@@ -137,14 +147,26 @@ const Header = () => {
               ))}
 
               {!loading && user && (
-                <Link
-                  to="/minhas-reservas"
-                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium flex items-center gap-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <Calendar className="h-4 w-4" />
-                  Minhas Reservas
-                </Link>
+                <>
+                  <Link
+                    to="/minhas-reservas"
+                    className="text-foreground hover:text-primary transition-colors duration-300 font-medium flex items-center gap-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <Calendar className="h-4 w-4" />
+                    Minhas Reservas
+                  </Link>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="text-primary hover:text-primary/80 transition-colors duration-300 font-medium flex items-center gap-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Shield className="h-4 w-4" />
+                      Painel Admin
+                    </Link>
+                  )}
+                </>
               )}
 
               <Button className="btn-gold w-full" onClick={() => {
