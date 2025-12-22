@@ -190,10 +190,12 @@ const Auth = () => {
                         <FormLabel>Nome Completo</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                             <Input
                               placeholder="Seu nome"
                               className="pl-10"
+                              autoComplete="name"
+                              type="text"
                               {...field}
                             />
                           </div>
