@@ -185,24 +185,24 @@ const Auth = () => {
                   <FormField
                     control={signupForm.control}
                     name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nome Completo</FormLabel>
-                        <FormControl>
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nome Completo</FormLabel>
                           <div className="relative">
                             <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-                            <Input
-                              placeholder="Seu nome"
-                              className="pl-10"
-                              autoComplete="name"
-                              type="text"
-                              {...field}
-                            />
+                            <FormControl>
+                              <Input
+                                placeholder="Seu nome"
+                                className="pl-10"
+                                autoComplete="name"
+                                type="text"
+                                {...field}
+                              />
+                            </FormControl>
                           </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                          <FormMessage />
+                        </FormItem>
+                      )}
                   />
 
                   <FormField
