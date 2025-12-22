@@ -41,6 +41,42 @@ const Auth = () => {
     }
   }, [user, loading, navigate]);
 
+  // Debug (somente desenvolvimento): ajuda a identificar overlays/foco bloqueando digitação
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+
+    const onPointerDown = (e: PointerEvent) => {
+      const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
+      const style = el ? window.getComputedStyle(el) : null;
+
+      console.log('[auth-debug] pointerdown', {
+        target: (e.target as HTMLElement | null)?.tagName,
+        targetClass: (e.target as HTMLElement | null)?.className,
+        elementFromPoint: el?.tagName,
+        elementFromPointClass: el?.className,
+        pointerEvents: style?.pointerEvents,
+        position: style?.position,
+        zIndex: style?.zIndex,
+      });
+    };
+
+    const onFocusIn = () => {
+      const active = document.activeElement as HTMLElement | null;
+      console.log('[auth-debug] focusin', {
+        active: active?.tagName,
+        activeClass: active?.className,
+      });
+    };
+
+    document.addEventListener('pointerdown', onPointerDown, true);
+    document.addEventListener('focusin', onFocusIn, true);
+
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      document.removeEventListener('focusin', onFocusIn, true);
+    };
+  }, []);
+
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' }
@@ -130,16 +166,18 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
+                              type="email"
+                              autoComplete="email"
                               placeholder="seu@email.com"
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -151,17 +189,18 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="password"
+                              autoComplete="current-password"
                               placeholder="••••••"
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -185,24 +224,24 @@ const Auth = () => {
                   <FormField
                     control={signupForm.control}
                     name="fullName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Nome Completo</FormLabel>
-                          <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-                            <FormControl>
-                              <Input
-                                placeholder="Seu nome"
-                                className="pl-10"
-                                autoComplete="name"
-                                type="text"
-                                {...field}
-                              />
-                            </FormControl>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome Completo</FormLabel>
+                        <div className="relative">
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
+                            <Input
+                              placeholder="Seu nome"
+                              className="pl-10"
+                              autoComplete="name"
+                              type="text"
+                              {...field}
+                            />
+                          </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
 
                   <FormField
@@ -211,16 +250,18 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
+                              type="email"
+                              autoComplete="email"
                               placeholder="seu@email.com"
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -232,17 +273,18 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="password"
+                              autoComplete="new-password"
                               placeholder="••••••"
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -254,17 +296,18 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Confirmar Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="password"
+                              autoComplete="new-password"
                               placeholder="••••••"
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
