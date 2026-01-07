@@ -18,14 +18,26 @@ const Footer = () => {
                 e cada refeição é uma celebração da diversidade gastronômica internacional.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="bg-primary/10 p-2 rounded-full hover:bg-primary/20 transition-colors">
-                  <Instagram className="h-5 w-5 text-primary" />
+                <a 
+                  href="#" 
+                  className="bg-primary/10 p-2 rounded-full hover:bg-primary/20 transition-colors"
+                  aria-label="Siga-nos no Instagram"
+                >
+                  <Instagram className="h-5 w-5 text-primary" aria-hidden="true" />
                 </a>
-                <a href="#" className="bg-primary/10 p-2 rounded-full hover:bg-primary/20 transition-colors">
-                  <Facebook className="h-5 w-5 text-primary" />
+                <a 
+                  href="#" 
+                  className="bg-primary/10 p-2 rounded-full hover:bg-primary/20 transition-colors"
+                  aria-label="Curta nossa página no Facebook"
+                >
+                  <Facebook className="h-5 w-5 text-primary" aria-hidden="true" />
                 </a>
-                <a href="#" className="bg-primary/10 p-2 rounded-full hover:bg-primary/20 transition-colors">
-                  <Twitter className="h-5 w-5 text-primary" />
+                <a 
+                  href="#" 
+                  className="bg-primary/10 p-2 rounded-full hover:bg-primary/20 transition-colors"
+                  aria-label="Siga-nos no Twitter"
+                >
+                  <Twitter className="h-5 w-5 text-primary" aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -67,7 +79,7 @@ const Footer = () => {
           {/* Bottom Bar */}
           <div className="border-t border-border mt-8 pt-8 text-center">
             <p className="text-muted-foreground">
-              © 2024 Mundo Gastronômico. Todos os direitos reservados. 
+              © {new Date().getFullYear()} Mundo Gastronômico. Todos os direitos reservados.
               <span className="mx-2">|</span>
               <a href="#" className="hover:text-primary transition-colors">Política de Privacidade</a>
               <span className="mx-2">|</span>
