@@ -49,7 +49,14 @@ const Index = () => {
       <main id="main-content">
         <HeroSection />
         <SocialProofSection />
-        <Suspense fallback={<div className="py-20" aria-label="Carregando conteúdo" />}>
+        <Suspense fallback={
+          <div className="py-20 flex justify-center items-center" role="status" aria-label="Carregando conteúdo">
+            <div className="animate-pulse flex flex-col items-center gap-4">
+              <div className="h-8 w-48 bg-muted rounded"></div>
+              <div className="h-4 w-64 bg-muted rounded"></div>
+            </div>
+          </div>
+        }>
           <AboutSection />
           <MenuSection />
           <ClassesSection />

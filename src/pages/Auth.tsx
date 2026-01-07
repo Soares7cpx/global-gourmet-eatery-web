@@ -41,41 +41,6 @@ const Auth = () => {
     }
   }, [user, loading, navigate]);
 
-  // Debug (somente desenvolvimento): ajuda a identificar overlays/foco bloqueando digitação
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-
-    const onPointerDown = (e: PointerEvent) => {
-      const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
-      const style = el ? window.getComputedStyle(el) : null;
-
-      console.log('[auth-debug] pointerdown', {
-        target: (e.target as HTMLElement | null)?.tagName,
-        targetClass: (e.target as HTMLElement | null)?.className,
-        elementFromPoint: el?.tagName,
-        elementFromPointClass: el?.className,
-        pointerEvents: style?.pointerEvents,
-        position: style?.position,
-        zIndex: style?.zIndex,
-      });
-    };
-
-    const onFocusIn = () => {
-      const active = document.activeElement as HTMLElement | null;
-      console.log('[auth-debug] focusin', {
-        active: active?.tagName,
-        activeClass: active?.className,
-      });
-    };
-
-    document.addEventListener('pointerdown', onPointerDown, true);
-    document.addEventListener('focusin', onFocusIn, true);
-
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown, true);
-      document.removeEventListener('focusin', onFocusIn, true);
-    };
-  }, []);
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
