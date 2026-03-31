@@ -131,9 +131,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="email"
                               autoComplete="email"
@@ -141,8 +141,8 @@ const Auth = () => {
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -154,9 +154,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="password"
                               autoComplete="current-password"
@@ -164,8 +164,8 @@ const Auth = () => {
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -192,9 +192,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Nome Completo</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
+                        <div className="relative">
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               placeholder="Seu nome"
                               className="pl-10"
@@ -202,8 +202,8 @@ const Auth = () => {
                               type="text"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -215,9 +215,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="email"
                               autoComplete="email"
@@ -225,8 +225,8 @@ const Auth = () => {
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -238,9 +238,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="password"
                               autoComplete="new-password"
@@ -248,8 +248,8 @@ const Auth = () => {
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -261,9 +261,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Confirmar Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                          <FormControl>
                             <Input
                               type="password"
                               autoComplete="new-password"
@@ -271,8 +271,8 @@ const Auth = () => {
                               className="pl-10"
                               {...field}
                             />
-                          </div>
-                        </FormControl>
+                          </FormControl>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
