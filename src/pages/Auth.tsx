@@ -192,9 +192,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Nome Completo</FormLabel>
-                        <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-                          <FormControl>
+                        <FormControl>
+                          <div className="relative">
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
                             <Input
                               placeholder="Seu nome"
                               className="pl-10"
@@ -202,8 +202,8 @@ const Auth = () => {
                               type="text"
                               {...field}
                             />
-                          </FormControl>
-                        </div>
+                          </div>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
