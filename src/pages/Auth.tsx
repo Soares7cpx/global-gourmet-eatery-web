@@ -131,9 +131,9 @@ const Auth = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-                          <FormControl>
+                        <FormControl>
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
                             <Input
                               type="email"
                               autoComplete="email"
@@ -141,8 +141,8 @@ const Auth = () => {
                               className="pl-10"
                               {...field}
                             />
-                          </FormControl>
-                        </div>
+                          </div>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
