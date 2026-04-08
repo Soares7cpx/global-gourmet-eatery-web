@@ -58,6 +58,7 @@ const MinhasReservas = () => {
       const { data, error } = await supabase
         .from('reservations')
         .select('*')
+        .eq('user_id', user.id)
         .order('date', { ascending: false });
 
       if (error) throw error;
