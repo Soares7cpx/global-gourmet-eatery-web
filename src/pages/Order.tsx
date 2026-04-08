@@ -37,30 +37,38 @@ const Order = () => {
   const loadData = async () => {
     setIsLoading(true);
     
-    // Load categories
-    const { data: categoriesData } = await supabase
-      .from('menu_categories')
-      .select('*')
-      .eq('is_active', true)
-      .order('display_order');
+    try {
+      // Load categories
+      const { data: categoriesData, error: catError } = await supabase
+        .from('menu_categories')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order');
 
-    if (categoriesData && categoriesData.length > 0) {
-      setCategories(categoriesData);
-      setActiveCategory(categoriesData[0].id);
+      if (catError) throw catError;
+
+      if (categoriesData && categoriesData.length > 0) {
+        setCategories(categoriesData);
+        setActiveCategory(categoriesData[0].id);
+      }
+
+      // Load menu items
+      const { data: itemsData, error: itemsError } = await supabase
+        .from('menu_items')
+        .select('*')
+        .eq('is_available', true)
+        .order('display_order');
+
+      if (itemsError) throw itemsError;
+
+      if (itemsData) {
+        setMenuItems(itemsData);
+      }
+    } catch (err) {
+      console.error('Error loading menu:', err);
+    } finally {
+      setIsLoading(false);
     }
-
-    // Load menu items
-    const { data: itemsData } = await supabase
-      .from('menu_items')
-      .select('*')
-      .eq('is_available', true)
-      .order('display_order');
-
-    if (itemsData) {
-      setMenuItems(itemsData);
-    }
-
-    setIsLoading(false);
   };
 
   const filteredItems = menuItems.filter(item => item.category_id === activeCategory);
