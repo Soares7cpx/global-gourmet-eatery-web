@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [mode, setMode] = useState<'login' | 'signup' | 'reset'>('login');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user, signIn, signUp, loading } = useAuth();
   const navigate = useNavigate();
@@ -21,6 +22,9 @@ const Auth = () => {
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Reset field
+  const [resetEmail, setResetEmail] = useState('');
 
   // Errors
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -97,11 +101,32 @@ const Auth = () => {
       toast.success('Conta criada com sucesso!', {
         description: 'Você já pode fazer login.'
       });
-      setIsLogin(true);
+      setMode('login');
       setFullName('');
       setSignupEmail('');
       setSignupPassword('');
       setConfirmPassword('');
+      setErrors({});
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resetEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetEmail.trim())) {
+      setErrors({ resetEmail: 'Email inválido' });
+      return;
+    }
+    setIsSubmitting(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail.trim(), {
+      redirectTo: `${window.location.origin}/auth`,
+    });
+    setIsSubmitting(false);
+    if (error) {
+      toast.error('Erro ao enviar email', { description: error.message });
+    } else {
+      toast.success('Email enviado!', { description: 'Verifique sua caixa de entrada para redefinir a senha.' });
+      setMode('login');
+      setResetEmail('');
       setErrors({});
     }
   };
@@ -131,17 +156,47 @@ const Auth = () => {
         <Card className="border-border/50 bg-card/50 backdrop-blur">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-playfair text-gradient">
-              {isLogin ? 'Entrar' : 'Criar Conta'}
+              {mode === 'login' ? 'Entrar' : mode === 'signup' ? 'Criar Conta' : 'Recuperar Senha'}
             </CardTitle>
             <CardDescription>
-              {isLogin
+              {mode === 'login'
                 ? 'Faça login para gerenciar suas reservas'
-                : 'Crie sua conta para fazer reservas'}
+                : mode === 'signup'
+                ? 'Crie sua conta para fazer reservas'
+                : 'Informe seu email para redefinir a senha'}
             </CardDescription>
           </CardHeader>
 
           <CardContent>
-            {isLogin ? (
+            {mode === 'reset' ? (
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium leading-none" htmlFor="reset-email">Email</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <input
+                      id="reset-email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="seu@email.com"
+                      className={inputClass}
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                    />
+                  </div>
+                  {errors.resetEmail && <p className="text-sm font-medium text-destructive">{errors.resetEmail}</p>}
+                </div>
+                <Button type="submit" className="w-full btn-gold" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Enviando...</>
+                  ) : 'Enviar Link de Recuperação'}
+                </Button>
+                <button type="button" onClick={() => { setMode('login'); setErrors({}); }}
+                  className="w-full text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Voltar ao login
+                </button>
+              </form>
+            ) : mode === 'login' ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium leading-none" htmlFor="login-email">Email</label>
@@ -187,6 +242,11 @@ const Auth = () => {
                     'Entrar'
                   )}
                 </Button>
+
+                <button type="button" onClick={() => { setMode('reset'); setErrors({}); }}
+                  className="w-full text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Esqueceu sua senha?
+                </button>
               </form>
             ) : (
               <form onSubmit={handleSignup} className="space-y-4">
@@ -275,12 +335,12 @@ const Auth = () => {
               <button
                 type="button"
                 onClick={() => {
-                  setIsLogin(!isLogin);
+                  setMode(mode === 'login' ? 'signup' : 'login');
                   setErrors({});
                 }}
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
-                {isLogin ? 'Não tem conta? Cadastre-se' : 'Já tem conta? Faça login'}
+                {mode === 'login' ? 'Não tem conta? Cadastre-se' : 'Já tem conta? Faça login'}
               </button>
             </div>
           </CardContent>
