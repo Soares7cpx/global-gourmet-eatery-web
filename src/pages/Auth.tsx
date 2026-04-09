@@ -156,17 +156,47 @@ const Auth = () => {
         <Card className="border-border/50 bg-card/50 backdrop-blur">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-playfair text-gradient">
-              {isLogin ? 'Entrar' : 'Criar Conta'}
+              {mode === 'login' ? 'Entrar' : mode === 'signup' ? 'Criar Conta' : 'Recuperar Senha'}
             </CardTitle>
             <CardDescription>
-              {isLogin
+              {mode === 'login'
                 ? 'Faça login para gerenciar suas reservas'
-                : 'Crie sua conta para fazer reservas'}
+                : mode === 'signup'
+                ? 'Crie sua conta para fazer reservas'
+                : 'Informe seu email para redefinir a senha'}
             </CardDescription>
           </CardHeader>
 
           <CardContent>
-            {isLogin ? (
+            {mode === 'reset' ? (
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium leading-none" htmlFor="reset-email">Email</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <input
+                      id="reset-email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="seu@email.com"
+                      className={inputClass}
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                    />
+                  </div>
+                  {errors.resetEmail && <p className="text-sm font-medium text-destructive">{errors.resetEmail}</p>}
+                </div>
+                <Button type="submit" className="w-full btn-gold" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Enviando...</>
+                  ) : 'Enviar Link de Recuperação'}
+                </Button>
+                <button type="button" onClick={() => { setMode('login'); setErrors({}); }}
+                  className="w-full text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Voltar ao login
+                </button>
+              </form>
+            ) : mode === 'login' ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium leading-none" htmlFor="login-email">Email</label>
