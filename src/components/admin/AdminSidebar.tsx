@@ -1,4 +1,4 @@
-import { Calendar, LayoutDashboard, Users, Settings, ChefHat } from 'lucide-react';
+import { Calendar, LayoutDashboard, Users, ChefHat, UtensilsCrossed, ShoppingBag } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { useLocation } from 'react-router-dom';
 import {
@@ -17,6 +17,8 @@ import {
 const menuItems = [
   { title: 'Dashboard', url: '/admin', icon: LayoutDashboard },
   { title: 'Reservas', url: '/admin/reservas', icon: Calendar },
+  { title: 'Pedidos', url: '/admin/pedidos', icon: ShoppingBag },
+  { title: 'Cardápio', url: '/admin/cardapio', icon: UtensilsCrossed },
   { title: 'Usuários', url: '/admin/usuarios', icon: Users },
 ];
 
