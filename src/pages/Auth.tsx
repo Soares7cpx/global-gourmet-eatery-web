@@ -242,6 +242,11 @@ const Auth = () => {
                     'Entrar'
                   )}
                 </Button>
+
+                <button type="button" onClick={() => { setMode('reset'); setErrors({}); }}
+                  className="w-full text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Esqueceu sua senha?
+                </button>
               </form>
             ) : (
               <form onSubmit={handleSignup} className="space-y-4">
@@ -330,12 +335,12 @@ const Auth = () => {
               <button
                 type="button"
                 onClick={() => {
-                  setIsLogin(!isLogin);
+                  setMode(mode === 'login' ? 'signup' : 'login');
                   setErrors({});
                 }}
                 className="text-sm text-muted-foreground hover:text-primary transition-colors"
               >
-                {isLogin ? 'Não tem conta? Cadastre-se' : 'Já tem conta? Faça login'}
+                {mode === 'login' ? 'Não tem conta? Cadastre-se' : 'Já tem conta? Faça login'}
               </button>
             </div>
           </CardContent>
