@@ -5,10 +5,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
 import { AdminSidebar } from './AdminSidebar';
 import { Button } from '@/components/ui/button';
+import { useRealtimeNotifications } from '@/hooks/useRealtimeNotifications';
 
 export function AdminLayout() {
   const { user, loading, isAdmin } = useAuth();
   const navigate = useNavigate();
+  useRealtimeNotifications();
 
   useEffect(() => {
     if (!loading && (!user || !isAdmin)) {
