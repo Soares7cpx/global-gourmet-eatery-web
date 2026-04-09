@@ -101,11 +101,32 @@ const Auth = () => {
       toast.success('Conta criada com sucesso!', {
         description: 'Você já pode fazer login.'
       });
-      setIsLogin(true);
+      setMode('login');
       setFullName('');
       setSignupEmail('');
       setSignupPassword('');
       setConfirmPassword('');
+      setErrors({});
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resetEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resetEmail.trim())) {
+      setErrors({ resetEmail: 'Email inválido' });
+      return;
+    }
+    setIsSubmitting(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail.trim(), {
+      redirectTo: `${window.location.origin}/auth`,
+    });
+    setIsSubmitting(false);
+    if (error) {
+      toast.error('Erro ao enviar email', { description: error.message });
+    } else {
+      toast.success('Email enviado!', { description: 'Verifique sua caixa de entrada para redefinir a senha.' });
+      setMode('login');
+      setResetEmail('');
       setErrors({});
     }
   };
