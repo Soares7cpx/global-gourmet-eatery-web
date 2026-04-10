@@ -8,9 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/hooks/useCart';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Tag, X, Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   customerName: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
@@ -35,6 +37,9 @@ interface CheckoutDialogProps {
 const CheckoutDialog = ({ open, onOpenChange }: CheckoutDialogProps) => {
   const { items, getTotal, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount_type: string; discount_value: number } | null>(null);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
