@@ -8,9 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/hooks/useCart';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Tag, X, Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   customerName: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
@@ -35,6 +37,9 @@ interface CheckoutDialogProps {
 const CheckoutDialog = ({ open, onOpenChange }: CheckoutDialogProps) => {
   const { items, getTotal, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount_type: string; discount_value: number } | null>(null);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -52,13 +57,45 @@ const CheckoutDialog = ({ open, onOpenChange }: CheckoutDialogProps) => {
     },
   });
 
+  const applyCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setApplyingCoupon(true);
+    const { data, error } = await supabase
+      .from('coupons')
+      .select('*')
+      .eq('code', couponCode.trim().toUpperCase())
+      .eq('is_active', true)
+      .single();
+
+    if (error || !data) {
+      toast.error('Cupom inválido ou expirado');
+    } else if (data.max_uses && data.used_count >= data.max_uses) {
+      toast.error('Cupom esgotado');
+    } else if (data.expires_at && new Date(data.expires_at) < new Date()) {
+      toast.error('Cupom expirado');
+    } else if (data.min_order_value && getTotal() < Number(data.min_order_value)) {
+      toast.error(`Pedido mínimo: R$ ${Number(data.min_order_value).toFixed(2)}`);
+    } else {
+      setAppliedCoupon({ code: data.code, discount_type: data.discount_type, discount_value: Number(data.discount_value) });
+      toast.success(`Cupom ${data.code} aplicado!`);
+    }
+    setApplyingCoupon(false);
+  };
+
+  const getDiscount = () => {
+    if (!appliedCoupon) return 0;
+    if (appliedCoupon.discount_type === 'percentage') return getTotal() * (appliedCoupon.discount_value / 100);
+    return Math.min(appliedCoupon.discount_value, getTotal());
+  };
+
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
 
     try {
       const subtotal = getTotal();
-      const deliveryFee = 5.00; // Taxa fixa por enquanto
-      const total = subtotal + deliveryFee;
+      const deliveryFee = 5.00;
+      const discount = getDiscount();
+      const total = subtotal + deliveryFee - discount;
 
       // Create order
       const { data: order, error: orderError } = await supabase
@@ -285,18 +322,47 @@ const CheckoutDialog = ({ open, onOpenChange }: CheckoutDialogProps) => {
               )}
             />
 
+            {/* Coupon */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Cupom de desconto</label>
+              {appliedCoupon ? (
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-green-500/20 text-green-400 gap-1">
+                    <Tag className="h-3 w-3" />{appliedCoupon.code}
+                    {appliedCoupon.discount_type === 'percentage' ? ` -${appliedCoupon.discount_value}%` : ` -R$${appliedCoupon.discount_value.toFixed(2)}`}
+                  </Badge>
+                  <Button type="button" size="icon" variant="ghost" className="h-6 w-6" onClick={() => setAppliedCoupon(null)}>
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Input placeholder="CÓDIGO" value={couponCode} onChange={e => setCouponCode(e.target.value)} className="uppercase" />
+                  <Button type="button" variant="outline" onClick={applyCoupon} disabled={applyingCoupon}>
+                    {applyingCoupon ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Aplicar'}
+                  </Button>
+                </div>
+              )}
+            </div>
+
             <div className="bg-muted p-4 rounded-lg space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Subtotal</span>
                 <span>R$ {getTotal().toFixed(2)}</span>
               </div>
+              {appliedCoupon && (
+                <div className="flex justify-between text-sm text-green-400">
+                  <span>Desconto ({appliedCoupon.code})</span>
+                  <span>- R$ {getDiscount().toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between text-sm">
                 <span>Taxa de entrega</span>
                 <span>R$ 5,00</span>
               </div>
               <div className="flex justify-between font-bold text-lg border-t pt-2">
                 <span>Total</span>
-                <span className="text-primary">R$ {(getTotal() + 5).toFixed(2)}</span>
+                <span className="text-primary">R$ {(getTotal() + 5 - getDiscount()).toFixed(2)}</span>
               </div>
             </div>
 

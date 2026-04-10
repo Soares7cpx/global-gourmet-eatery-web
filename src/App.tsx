@@ -17,6 +17,7 @@ import AdminReservations from "./pages/admin/AdminReservations";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminMenu from "./pages/admin/AdminMenu";
 import AdminOrders from "./pages/admin/AdminOrders";
+import AdminCoupons from "./pages/admin/AdminCoupons";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="reservas" element={<AdminReservations />} />
               <Route path="pedidos" element={<AdminOrders />} />
               <Route path="cardapio" element={<AdminMenu />} />
+              <Route path="cupons" element={<AdminCoupons />} />
               <Route path="usuarios" element={<AdminUsers />} />
             </Route>
 
