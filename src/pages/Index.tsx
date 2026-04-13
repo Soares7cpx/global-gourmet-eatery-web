@@ -19,6 +19,8 @@ const FAQSection = lazy(() => import('@/components/FAQSection'));
 const LocationSection = lazy(() => import('@/components/LocationSection'));
 const ContactSection = lazy(() => import('@/components/ContactSection'));
 const NewsletterSection = lazy(() => import('@/components/NewsletterSection'));
+const LoyaltySection = lazy(() => import('@/components/LoyaltySection'));
+const AIChatWidget = lazy(() => import('@/components/AIChatWidget'));
 const Footer = lazy(() => import('@/components/Footer'));
 
 const Index = () => {
@@ -66,6 +68,7 @@ const Index = () => {
           <FAQSection />
           <LocationSection />
           <ContactSection />
+          <LoyaltySection />
           <NewsletterSection />
         </Suspense>
       </main>
@@ -73,6 +76,9 @@ const Index = () => {
         <Footer />
       </Suspense>
       <WhatsAppButton />
+      <Suspense fallback={null}>
+        <AIChatWidget />
+      </Suspense>
       <BackToTop />
       <CookieConsent />
     </div>

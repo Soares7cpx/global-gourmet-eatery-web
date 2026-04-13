@@ -136,8 +136,23 @@ const CheckoutDialog = ({ open, onOpenChange }: CheckoutDialogProps) => {
 
       if (itemsError) throw itemsError;
 
+      // Award loyalty points (1 point per R$1 spent)
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const pointsEarned = Math.floor(total);
+        if (pointsEarned > 0) {
+          await supabase.from('loyalty_points').insert({
+            user_id: user.id,
+            points: pointsEarned,
+            transaction_type: 'earned',
+            description: `Pedido #${order.id.slice(0, 8)}`,
+            order_id: order.id,
+          });
+        }
+      }
+
       toast.success('Pedido realizado com sucesso!', {
-        description: `Número do pedido: ${order.id.slice(0, 8)}`,
+        description: `Número do pedido: ${order.id.slice(0, 8)}${user ? ` | +${Math.floor(total)} pontos!` : ''}`,
       });
 
       clearCart();
