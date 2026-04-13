@@ -68,6 +68,7 @@ const Index = () => {
           <FAQSection />
           <LocationSection />
           <ContactSection />
+          <LoyaltySection />
           <NewsletterSection />
         </Suspense>
       </main>
@@ -75,6 +76,9 @@ const Index = () => {
         <Footer />
       </Suspense>
       <WhatsAppButton />
+      <Suspense fallback={null}>
+        <AIChatWidget />
+      </Suspense>
       <BackToTop />
       <CookieConsent />
     </div>
