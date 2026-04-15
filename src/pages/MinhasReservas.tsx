@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
 
 interface Reservation {
   id: string;
@@ -99,6 +100,7 @@ Por favor, entre em contato comigo para ajustar os detalhes.
   return (
     <div className="min-h-screen bg-background px-4 py-12">
       <div className="max-w-4xl mx-auto">
+        <PageBreadcrumb />
         <Button
           variant="ghost"
           onClick={() => navigate('/')}

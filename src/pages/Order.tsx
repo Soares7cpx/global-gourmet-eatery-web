@@ -7,6 +7,7 @@ import CartSheet from '@/components/order/CartSheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
 
 interface MenuCategory {
   id: string;
@@ -108,6 +109,8 @@ const Order = () => {
             </div>
           </div>
         </header>
+
+        <PageBreadcrumb />
 
         {/* Main Content */}
         <main className="container mx-auto px-4 py-8">
