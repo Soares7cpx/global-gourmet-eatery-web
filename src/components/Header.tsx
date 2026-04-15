@@ -24,6 +24,7 @@ const Header = () => {
     { label: 'Sobre', href: '#about' },
     { label: 'Cardápio', href: '#menu' },
     { label: 'Pedidos Online', href: '/pedidos', isRoute: true },
+    { label: 'Receitas', href: '/receitas', isRoute: true },
     { label: 'Aulas', href: '#classes' },
     { label: 'Galeria', href: '#gallery' },
     { label: 'FAQ', href: '#faq' },

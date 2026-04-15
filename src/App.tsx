@@ -9,6 +9,8 @@ import Index from "./pages/Index";
 import Order from "./pages/Order";
 import Auth from "./pages/Auth";
 import MinhasReservas from "./pages/MinhasReservas";
+import Receitas from "./pages/Receitas";
+import ReceitaDetalhe from "./pages/ReceitaDetalhe";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -44,6 +46,8 @@ const App = () => (
               <Route path="/pedidos" element={<Order />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/minhas-reservas" element={<MinhasReservas />} />
+              <Route path="/receitas" element={<Receitas />} />
+              <Route path="/receitas/:slug" element={<ReceitaDetalhe />} />
               
               {/* Admin routes */}
               <Route path="/admin" element={<AdminLayout />}>
