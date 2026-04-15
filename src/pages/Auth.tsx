@@ -6,6 +6,7 @@ import { Loader2, Mail, Lock, User, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
 
 const Auth = () => {
   const [mode, setMode] = useState<'login' | 'signup' | 'reset'>('login');
@@ -144,6 +145,7 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-md">
+        <PageBreadcrumb />
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
