@@ -10,6 +10,7 @@ const routeLabels: Record<string, string> = {
   '/pedidos': 'Pedidos Online',
   '/auth': 'Autenticação',
   '/minhas-reservas': 'Minhas Reservas',
+  '/receitas': 'Receitas',
   '/admin': 'Painel Admin',
   '/admin/reservas': 'Reservas',
   '/admin/pedidos': 'Pedidos',
