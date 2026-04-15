@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import Header from '@/components/Header';
 import PageBreadcrumb from '@/components/PageBreadcrumb';
+import SEOHead from '@/components/SEOHead';
 import Footer from '@/components/Footer';
 
 interface Recipe {
@@ -39,7 +40,6 @@ const Receitas = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = 'Receitas - Mundo Gastronômico';
     loadRecipes();
   }, []);
 
@@ -62,6 +62,11 @@ const Receitas = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Receitas"
+        description="Explore receitas autênticas de diversas culinárias do mundo com passo a passo detalhado e informações nutricionais."
+        path="/receitas"
+      />
       <Header />
       <div className="pt-20">
         <PageBreadcrumb />
