@@ -1,0 +1,20 @@
+{
+  "name": "Mundo Gastronômico",
+  "short_name": "Mundo Gastro",
+  "description": "Restaurante de culinária internacional em São Paulo com receitas, pedidos online e aulas de culinária.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1412",
+  "theme_color": "#eab308",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/placeholder.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "restaurant", "education"],
+  "lang": "pt-BR"
+}
