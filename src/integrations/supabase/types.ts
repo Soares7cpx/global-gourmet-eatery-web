@@ -327,6 +327,120 @@ export type Database = {
         }
         Relationships: []
       }
+      recipe_comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          parent_id: string | null
+          recipe_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          parent_id?: string | null
+          recipe_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          parent_id?: string | null
+          recipe_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "recipe_comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_comments_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recipes: {
+        Row: {
+          author_id: string
+          calories: number | null
+          carbs: number | null
+          cook_time: number | null
+          created_at: string
+          description: string | null
+          difficulty: string | null
+          fat: number | null
+          id: string
+          image_url: string | null
+          ingredients: Json
+          prep_time: number | null
+          protein: number | null
+          servings: number | null
+          slug: string
+          status: string
+          steps: Json
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          author_id: string
+          calories?: number | null
+          carbs?: number | null
+          cook_time?: number | null
+          created_at?: string
+          description?: string | null
+          difficulty?: string | null
+          fat?: number | null
+          id?: string
+          image_url?: string | null
+          ingredients?: Json
+          prep_time?: number | null
+          protein?: number | null
+          servings?: number | null
+          slug: string
+          status?: string
+          steps?: Json
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          author_id?: string
+          calories?: number | null
+          carbs?: number | null
+          cook_time?: number | null
+          created_at?: string
+          description?: string | null
+          difficulty?: string | null
+          fat?: number | null
+          id?: string
+          image_url?: string | null
+          ingredients?: Json
+          prep_time?: number | null
+          protein?: number | null
+          servings?: number | null
+          slug?: string
+          status?: string
+          steps?: Json
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       reservations: {
         Row: {
           created_at: string
