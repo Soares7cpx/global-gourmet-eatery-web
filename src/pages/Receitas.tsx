@@ -1,10 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Clock, Users, ChefHat, ArrowRight } from 'lucide-react';
+import { Clock, Users, ChefHat, ArrowRight, Search, X } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import Header from '@/components/Header';
 import PageBreadcrumb from '@/components/PageBreadcrumb';
 import SEOHead from '@/components/SEOHead';
@@ -35,9 +45,17 @@ const difficultyColors: Record<string, string> = {
   hard: 'bg-red-500/20 text-red-400 border-red-500/30',
 };
 
+const DEFAULT_TIME_MAX = 240;
+const DEFAULT_CAL_MAX = 1500;
+
 const Receitas = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [search, setSearch] = useState('');
+  const [difficulty, setDifficulty] = useState<string>('all');
+  const [maxTime, setMaxTime] = useState<number>(DEFAULT_TIME_MAX);
+  const [maxCalories, setMaxCalories] = useState<number>(DEFAULT_CAL_MAX);
 
   useEffect(() => {
     loadRecipes();
@@ -58,6 +76,34 @@ const Receitas = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const filtered = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    return recipes.filter((r) => {
+      const totalTime = (r.prep_time || 0) + (r.cook_time || 0);
+      if (difficulty !== 'all' && r.difficulty !== difficulty) return false;
+      if (totalTime > maxTime) return false;
+      if (maxCalories < DEFAULT_CAL_MAX && (r.calories ?? 0) > maxCalories) return false;
+      if (term) {
+        const haystack = `${r.title} ${r.description ?? ''}`.toLowerCase();
+        if (!haystack.includes(term)) return false;
+      }
+      return true;
+    });
+  }, [recipes, search, difficulty, maxTime, maxCalories]);
+
+  const hasActiveFilters =
+    search.trim() !== '' ||
+    difficulty !== 'all' ||
+    maxTime !== DEFAULT_TIME_MAX ||
+    maxCalories !== DEFAULT_CAL_MAX;
+
+  const clearFilters = () => {
+    setSearch('');
+    setDifficulty('all');
+    setMaxTime(DEFAULT_TIME_MAX);
+    setMaxCalories(DEFAULT_CAL_MAX);
   };
 
   return (
@@ -83,6 +129,85 @@ const Receitas = () => {
             </p>
           </div>
 
+          {/* Filtros */}
+          <Card className="border-border/50 bg-card/50 backdrop-blur mb-8">
+            <CardContent className="p-5 space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="Buscar por nome ou descrição..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="pl-9"
+                    aria-label="Buscar receitas"
+                  />
+                </div>
+                <Select value={difficulty} onValueChange={setDifficulty}>
+                  <SelectTrigger aria-label="Filtrar por dificuldade">
+                    <SelectValue placeholder="Dificuldade" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todas as dificuldades</SelectItem>
+                    <SelectItem value="easy">Fácil</SelectItem>
+                    <SelectItem value="medium">Médio</SelectItem>
+                    <SelectItem value="hard">Difícil</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <label className="font-medium text-foreground">Tempo total máximo</label>
+                    <span className="text-muted-foreground">
+                      {maxTime >= DEFAULT_TIME_MAX ? 'Qualquer' : `até ${maxTime} min`}
+                    </span>
+                  </div>
+                  <Slider
+                    value={[maxTime]}
+                    min={15}
+                    max={DEFAULT_TIME_MAX}
+                    step={15}
+                    onValueChange={(v) => setMaxTime(v[0])}
+                    aria-label="Tempo total máximo em minutos"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <label className="font-medium text-foreground">Calorias máximas</label>
+                    <span className="text-muted-foreground">
+                      {maxCalories >= DEFAULT_CAL_MAX ? 'Qualquer' : `até ${maxCalories} kcal`}
+                    </span>
+                  </div>
+                  <Slider
+                    value={[maxCalories]}
+                    min={100}
+                    max={DEFAULT_CAL_MAX}
+                    step={50}
+                    onValueChange={(v) => setMaxCalories(v[0])}
+                    aria-label="Calorias máximas"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <p className="text-sm text-muted-foreground">
+                  {loading
+                    ? 'Carregando...'
+                    : `${filtered.length} ${filtered.length === 1 ? 'receita encontrada' : 'receitas encontradas'}`}
+                </p>
+                {hasActiveFilters && (
+                  <Button variant="ghost" size="sm" onClick={clearFilters}>
+                    <X className="h-4 w-4" />
+                    Limpar filtros
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -95,9 +220,18 @@ const Receitas = () => {
               <h2 className="text-xl font-playfair text-foreground mb-2">Nenhuma receita disponível ainda</h2>
               <p className="text-muted-foreground">Em breve teremos receitas incríveis para você!</p>
             </div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center py-20">
+              <Search className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+              <h2 className="text-xl font-playfair text-foreground mb-2">Nenhuma receita corresponde aos filtros</h2>
+              <p className="text-muted-foreground mb-4">Tente ajustar a busca ou limpar os filtros aplicados.</p>
+              <Button variant="outline" onClick={clearFilters}>
+                Limpar filtros
+              </Button>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recipes.map((recipe) => (
+              {filtered.map((recipe) => (
                 <Link key={recipe.id} to={`/receitas/${recipe.slug}`}>
                   <Card className="border-border/50 bg-card/50 backdrop-blur card-hover overflow-hidden group h-full">
                     {recipe.image_url && (
