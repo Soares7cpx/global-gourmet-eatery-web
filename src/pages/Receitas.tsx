@@ -15,6 +15,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import Header from '@/components/Header';
 import PageBreadcrumb from '@/components/PageBreadcrumb';
 import SEOHead from '@/components/SEOHead';
