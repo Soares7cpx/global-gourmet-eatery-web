@@ -51,6 +51,7 @@ const difficultyLabels: Record<string, string> = {
 const ReceitaDetalhe = () => {
   const { slug } = useParams<{ slug: string }>();
   const { user } = useAuth();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
