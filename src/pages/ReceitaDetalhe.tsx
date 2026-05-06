@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
-import { Clock, Users, ChefHat, Flame, Loader2, ArrowLeft, MessageCircle, Send, Reply, Trash2, Share2 } from 'lucide-react';
+import { Clock, Users, ChefHat, Flame, Loader2, ArrowLeft, MessageCircle, Send, Reply, Trash2, Share2, Heart } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -50,6 +51,7 @@ const difficultyLabels: Record<string, string> = {
 const ReceitaDetalhe = () => {
   const { slug } = useParams<{ slug: string }>();
   const { user } = useAuth();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -194,6 +196,16 @@ const ReceitaDetalhe = () => {
               <Badge className="bg-primary/20 text-primary border-primary/30">
                 {difficultyLabels[recipe.difficulty] || recipe.difficulty}
               </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => toggleFavorite(recipe.id)}
+                className="gap-2 text-muted-foreground"
+                aria-label={isFavorite(recipe.id) ? 'Remover dos favoritos' : 'Favoritar'}
+              >
+                <Heart className={`h-4 w-4 ${isFavorite(recipe.id) ? 'fill-primary text-primary' : ''}`} />
+                {isFavorite(recipe.id) ? 'Favoritada' : 'Favoritar'}
+              </Button>
               <Button variant="ghost" size="sm" onClick={handleShare} className="gap-2 text-muted-foreground">
                 <Share2 className="h-4 w-4" /> Compartilhar
               </Button>

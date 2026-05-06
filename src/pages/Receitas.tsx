@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Clock, Users, ChefHat, ArrowRight, Search, X } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import { Clock, Users, ChefHat, ArrowRight, Search, X, Heart } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -61,6 +62,7 @@ const PAGE_SIZE = 9;
 const Receitas = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const [search, setSearch] = useState('');
   const [difficulty, setDifficulty] = useState<string>('all');
@@ -283,7 +285,19 @@ const Receitas = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {paginated.map((recipe) => (
                   <Link key={recipe.id} to={`/receitas/${recipe.slug}`}>
-                    <Card className="border-border/50 bg-card/50 backdrop-blur card-hover overflow-hidden group h-full">
+                    <Card className="border-border/50 bg-card/50 backdrop-blur card-hover overflow-hidden group h-full relative">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleFavorite(recipe.id);
+                        }}
+                        aria-label={isFavorite(recipe.id) ? 'Remover dos favoritos' : 'Favoritar receita'}
+                        className="absolute top-3 right-3 z-10 h-9 w-9 rounded-full bg-background/70 backdrop-blur flex items-center justify-center hover:bg-background transition-colors"
+                      >
+                        <Heart className={`h-4 w-4 ${isFavorite(recipe.id) ? 'fill-primary text-primary' : 'text-foreground'}`} />
+                      </button>
                       {recipe.image_url && (
                         <div className="aspect-video overflow-hidden">
                           <img
