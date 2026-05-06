@@ -62,6 +62,7 @@ const PAGE_SIZE = 9;
 const Receitas = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const [search, setSearch] = useState('');
   const [difficulty, setDifficulty] = useState<string>('all');
