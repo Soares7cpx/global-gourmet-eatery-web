@@ -56,6 +56,7 @@ const difficultyColors: Record<string, string> = {
 
 const DEFAULT_TIME_MAX = 240;
 const DEFAULT_CAL_MAX = 1500;
+const PAGE_SIZE = 9;
 
 const Receitas = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
