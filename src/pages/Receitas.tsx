@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Clock, Users, ChefHat, ArrowRight, Search, X } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import { Clock, Users, ChefHat, ArrowRight, Search, X, Heart } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
