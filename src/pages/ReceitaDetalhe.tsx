@@ -196,6 +196,16 @@ const ReceitaDetalhe = () => {
               <Badge className="bg-primary/20 text-primary border-primary/30">
                 {difficultyLabels[recipe.difficulty] || recipe.difficulty}
               </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => toggleFavorite(recipe.id)}
+                className="gap-2 text-muted-foreground"
+                aria-label={isFavorite(recipe.id) ? 'Remover dos favoritos' : 'Favoritar'}
+              >
+                <Heart className={`h-4 w-4 ${isFavorite(recipe.id) ? 'fill-primary text-primary' : ''}`} />
+                {isFavorite(recipe.id) ? 'Favoritada' : 'Favoritar'}
+              </Button>
               <Button variant="ghost" size="sm" onClick={handleShare} className="gap-2 text-muted-foreground">
                 <Share2 className="h-4 w-4" /> Compartilhar
               </Button>
