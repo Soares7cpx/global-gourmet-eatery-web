@@ -15,6 +15,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import Header from '@/components/Header';
 import PageBreadcrumb from '@/components/PageBreadcrumb';
 import SEOHead from '@/components/SEOHead';
@@ -47,6 +56,7 @@ const difficultyColors: Record<string, string> = {
 
 const DEFAULT_TIME_MAX = 240;
 const DEFAULT_CAL_MAX = 1500;
+const PAGE_SIZE = 9;
 
 const Receitas = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -93,6 +103,39 @@ const Receitas = () => {
     });
   }, [recipes, search, difficulty, maxTime, maxCalories]);
 
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+
+  useEffect(() => {
+    setPage(1);
+  }, [search, difficulty, maxTime, maxCalories]);
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(
+    () => filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [filtered, page]
+  );
+
+  const pageNumbers = useMemo(() => {
+    const pages: (number | 'ellipsis')[] = [];
+    const add = (p: number) => pages.push(p);
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) add(i);
+    } else {
+      add(1);
+      if (page > 3) pages.push('ellipsis');
+      const start = Math.max(2, page - 1);
+      const end = Math.min(totalPages - 1, page + 1);
+      for (let i = start; i <= end; i++) add(i);
+      if (page < totalPages - 2) pages.push('ellipsis');
+      add(totalPages);
+    }
+    return pages;
+  }, [page, totalPages]);
+
   const hasActiveFilters =
     search.trim() !== '' ||
     difficulty !== 'all' ||
@@ -104,6 +147,12 @@ const Receitas = () => {
     setDifficulty('all');
     setMaxTime(DEFAULT_TIME_MAX);
     setMaxCalories(DEFAULT_CAL_MAX);
+  };
+
+  const goToPage = (p: number) => {
+    const next = Math.min(Math.max(1, p), totalPages);
+    setPage(next);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -230,53 +279,104 @@ const Receitas = () => {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((recipe) => (
-                <Link key={recipe.id} to={`/receitas/${recipe.slug}`}>
-                  <Card className="border-border/50 bg-card/50 backdrop-blur card-hover overflow-hidden group h-full">
-                    {recipe.image_url && (
-                      <div className="aspect-video overflow-hidden">
-                        <img
-                          src={recipe.image_url}
-                          alt={recipe.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
-                    <CardContent className="p-5 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <Badge className={difficultyColors[recipe.difficulty] || difficultyColors.medium}>
-                          {difficultyLabels[recipe.difficulty] || recipe.difficulty}
-                        </Badge>
-                        {recipe.calories && (
-                          <span className="text-xs text-muted-foreground">{recipe.calories} kcal</span>
-                        )}
-                      </div>
-                      <h3 className="font-playfair text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                        {recipe.title}
-                      </h3>
-                      {recipe.description && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">{recipe.description}</p>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {paginated.map((recipe) => (
+                  <Link key={recipe.id} to={`/receitas/${recipe.slug}`}>
+                    <Card className="border-border/50 bg-card/50 backdrop-blur card-hover overflow-hidden group h-full">
+                      {recipe.image_url && (
+                        <div className="aspect-video overflow-hidden">
+                          <img
+                            src={recipe.image_url}
+                            alt={recipe.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
                       )}
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2">
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-3.5 w-3.5" />
-                          {recipe.prep_time + recipe.cook_time} min
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Users className="h-3.5 w-3.5" />
-                          {recipe.servings} porções
-                        </span>
-                        <span className="ml-auto flex items-center gap-1 text-primary">
-                          Ver receita <ArrowRight className="h-3 w-3" />
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
+                      <CardContent className="p-5 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <Badge className={difficultyColors[recipe.difficulty] || difficultyColors.medium}>
+                            {difficultyLabels[recipe.difficulty] || recipe.difficulty}
+                          </Badge>
+                          {recipe.calories && (
+                            <span className="text-xs text-muted-foreground">{recipe.calories} kcal</span>
+                          )}
+                        </div>
+                        <h3 className="font-playfair text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                          {recipe.title}
+                        </h3>
+                        {recipe.description && (
+                          <p className="text-sm text-muted-foreground line-clamp-2">{recipe.description}</p>
+                        )}
+                        <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2">
+                          <span className="flex items-center gap-1">
+                            <Clock className="h-3.5 w-3.5" />
+                            {recipe.prep_time + recipe.cook_time} min
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Users className="h-3.5 w-3.5" />
+                            {recipe.servings} porções
+                          </span>
+                          <span className="ml-auto flex items-center gap-1 text-primary">
+                            Ver receita <ArrowRight className="h-3 w-3" />
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <Pagination className="mt-10">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          goToPage(page - 1);
+                        }}
+                        aria-disabled={page === 1}
+                        className={page === 1 ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                    {pageNumbers.map((p, idx) =>
+                      p === 'ellipsis' ? (
+                        <PaginationItem key={`e-${idx}`}>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      ) : (
+                        <PaginationItem key={p}>
+                          <PaginationLink
+                            href="#"
+                            isActive={p === page}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              goToPage(p);
+                            }}
+                          >
+                            {p}
+                          </PaginationLink>
+                        </PaginationItem>
+                      )
+                    )}
+                    <PaginationItem>
+                      <PaginationNext
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          goToPage(page + 1);
+                        }}
+                        aria-disabled={page === totalPages}
+                        className={page === totalPages ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              )}
+            </>
           )}
         </main>
       </div>
