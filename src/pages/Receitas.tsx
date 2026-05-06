@@ -103,6 +103,39 @@ const Receitas = () => {
     });
   }, [recipes, search, difficulty, maxTime, maxCalories]);
 
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+
+  useEffect(() => {
+    setPage(1);
+  }, [search, difficulty, maxTime, maxCalories]);
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const paginated = useMemo(
+    () => filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [filtered, page]
+  );
+
+  const pageNumbers = useMemo(() => {
+    const pages: (number | 'ellipsis')[] = [];
+    const add = (p: number) => pages.push(p);
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) add(i);
+    } else {
+      add(1);
+      if (page > 3) pages.push('ellipsis');
+      const start = Math.max(2, page - 1);
+      const end = Math.min(totalPages - 1, page + 1);
+      for (let i = start; i <= end; i++) add(i);
+      if (page < totalPages - 2) pages.push('ellipsis');
+      add(totalPages);
+    }
+    return pages;
+  }, [page, totalPages]);
+
   const hasActiveFilters =
     search.trim() !== '' ||
     difficulty !== 'all' ||
@@ -114,6 +147,12 @@ const Receitas = () => {
     setDifficulty('all');
     setMaxTime(DEFAULT_TIME_MAX);
     setMaxCalories(DEFAULT_CAL_MAX);
+  };
+
+  const goToPage = (p: number) => {
+    const next = Math.min(Math.max(1, p), totalPages);
+    setPage(next);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
